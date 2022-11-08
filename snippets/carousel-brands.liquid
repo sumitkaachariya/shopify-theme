@@ -1,0 +1,22 @@
+<!--Brands carousel-->
+<div class="container">
+  <div class="fourteen columns brands-carousel">
+    <div class="brands-inner">
+      <h3><span class="heading-line line-right" ></span><span class="" >{{settings.brands-carousel}}</span><span class="heading-line line-left" ></span></h3>         
+      <div class="owl-carousel-brands">             
+        {% for link in linklists[settings.brands-list].links %}
+        <div class='owl-item'>           
+          <div class="collection_image_slider" style="width:220px; height:180px; background:url('{{ link.object.image.src | collection_img_url: 'medium' }}'); background-size: contain;  background-repeat: no-repeat;  background-position: 50%;" >
+            <a href="{{ link.url }}" title="{{ link.title }}"></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>  
+    <div class="all-brands-block">
+      <div class="all-brands-button">
+        <a href="/pages/brands" target="_blank" title="Shop by Brand" class="action_button">View all Brands</a>	
+      </div>
+    </div>
+  </div> 
+</div>   

@@ -1,0 +1,1171 @@
+<link rel="stylesheet" href="https://app.editorify.com/app/css/darkroom.css">
+<script src="https://app.editorify.com/app/js/fabric.js"></script>
+  <script src="https://app.editorify.com/app/js/darkroom.js"></script>
+<script src="https://app.editorify.com/app/ckeditor.js"></script>
+		 <script>
+           var image_id;
+  $("document").ready(function(){
+    
+    $( ".edit_button" ).prependTo( "body" );
+    $( ".product-edit-outer" ).prependTo( "body" );
+    
+     $(".edit_icon").click(function(){
+       console.log("edit icon clicked");
+    image_id = $(this).parent(".image-layer").siblings("img").attr("data-id");
+       //alert(image_id);
+      // console.log(edit_icon_src);
+     // $(".image_editor_inner").attr("src",edit_icon_src);
+       
+      // $(".image_editor_inner").attr("id","target");
+   $(this).parent(".image-layer").siblings(".image_editor_popup").show();
+  })
+    $(".close-editor").click(function(){
+    $(".image_editor_inner").attr("src","");
+    $(".image_editor_popup").hide();
+  })
+  })
+	</script>
+	<script>
+  $(document).ready(function(){
+    $(".setposition").click(function(){
+    $(".positionloader").show();
+      var product_id = $(".product_edit_id").val();
+var image_id = $(this).parents(".position_editor_popup").data("id");
+      var shop_url = $(".shopify_edit_url").val();
+      var shop_permanent_url = $(".shopify_edit_permanent_url").val();
+      var position = $(this).siblings(".inputbox").val();
+      
+    $.ajax({ 
+               
+             url: "https://app.editorify.com/app/position_update.php",
+	 dataType: "json",
+      type: "POST",
+      data: { 
+        shop_url: shop_url,
+        shop_permanent_url: shop_permanent_url,
+        product_id: product_id,
+        image_id: image_id,
+        position:position
+      },       
+      error: function(data) {
+        window.location.reload();
+
+      },         
+      success: function(data) {
+        window.location.reload();
+
+      }
+    })
+  })
+    
+    $(".position_icon").click(function(){
+      $(this).parents(".image-layer").siblings(".position_editor_popup").show();
+    //$(".position_editor_popup").show();
+    })
+    $(".close-preview").click(function(){
+    $(".position_editor_popup").hide();
+    })
+    })
+</script>
+	
+		 <style>
+		 .note_part {
+    padding: 5px;
+}
+		 .organization_part h2.product_app_heading {
+    display: inline-block;
+    width: 100%;
+}
+		 img { max-width: 100%; }
+		 .delete_variants_popup > h2 {
+    display: block !important;
+}
+.edit_button {
+  background-color: #f45b4f;
+  border: 1px solid rgba(0, 0, 0, 0);
+  color: #ffffff;
+  cursor: pointer;
+  float: right;
+  font-size: 14px;
+  left: 10px;
+  line-height: normal;
+  margin: 0 auto;
+  opacity: 1;
+  padding: 5px;
+  position: absolute;
+  text-align: center;
+  top: 10px;
+  width: 60px;
+  z-index: 99999;
+}
+.product-edit-popup {
+  height: auto;
+    overflow: auto;
+    padding: 20px;
+	box-sizing: border-box;
+}
+.product-edit-outer {
+    background: #ebeef0 none repeat scroll 0 0;
+    border: 1px solid;
+    font-family: "Roboto",sans-serif;
+    height: auto;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    padding: 0;
+    position: absolute;
+    top: 0 !important;
+    width: 100%;
+    z-index: 999999;
+	box-sizing: border-box;
+}
+.product_images_edit_li img {
+    max-width: 100%;
+}
+.product-edit-left-section {
+  box-sizing: border-box;
+  float: left;
+  margin: 0;
+  padding-right: 10px;
+  width: 67%;
+}
+.product-edit-right-section {
+  float: right;
+  padding-left: 10px;
+  width: 33%;
+  box-sizing: border-box;
+}
+span.variant_edit_title {
+    display: inline-block;
+    width: 94px;
+}
+span.variant_edit_price_sku {
+    display: inline-block;
+    
+}
+.variant_edit_price_sku input {
+    width: 95px;
+    float: left;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.product-edit-images {
+    display: inline-block;
+   background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%; margin-bottom: 20px;
+	position: relative;
+	box-sizing: border-box;
+}
+.product_add_images {
+  color: #0078bd;
+  cursor: pointer;
+  float: right;
+  font-size: 14px;
+  text-decoration: none;
+}
+           h2.product_app_heading {
+    float: left;
+}
+.product_add_variant {
+  color: #0078bd;
+  cursor: pointer;
+  float: right;
+  font-size: 14px;
+  text-decoration: none;
+}
+.product_add_images_popup {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  height: 400px;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: 0;
+  overflow: auto;
+  padding: 20px;
+  position: absolute;
+  top: 0 !important;
+  width: 400px;
+  z-index: 9999;
+}
+          .bulk_price_popup {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid;
+    height: 230px;
+    left: 40%;
+    margin-left: -150px;
+    margin-top: 0;
+    overflow: auto;
+    padding: 50px 20px 20px 20px;
+    position: absolute;
+    top: 0 !important;
+    width: 300px;
+    z-index: 9999;
+}
+           .bulk_weight_popup, .bulk_sku_popup {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid;
+    height: 170px;
+    left: 40%;
+    margin-left: -150px;
+    margin-top: 0;
+    overflow: auto;
+    padding: 50px 20px 20px 20px;
+    position: absolute;
+    top: 0 !important;
+    width: 300px;
+    z-index: 9999;
+}
+.product_preview_popup {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  height: 400px;
+  left: 50%;
+  margin-left: -250px;
+  margin-top: -200px;
+  overflow: auto;
+  padding: 20px;
+  position: absolute;
+  top: 50% !important;
+  width: 500px;
+  z-index: 9999;
+}
+           .darkroom-toolbar
+           {
+             top: -47px !important;
+           }
+           figure.image-container.target {
+   			 margin-top: 30px;
+				}
+          .image_editor_popup {
+            background: #fff none repeat scroll 0 0;
+            border: 1px solid;
+            height: 500px;
+            left: 50%;
+            margin-left: -400px;
+            margin-top: -250px;
+            overflow: auto;
+            padding: 20px;
+            position: fixed;
+            top: 50% !important;
+            width: 800px;
+            z-index: 9999;
+			}
+.variant_edit_popup {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  height: 400px;
+  left: 50%;
+  margin-left: -230px;
+  margin-top: 0;
+  overflow: auto;
+  padding: 20px;
+  position: absolute;
+  top: 0 !important;
+  width: 460px;
+  z-index: 9999;
+}
+           .variant_edit_popup2 {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  height: 400px;
+  left: 50%;
+  margin-left: -230px;
+  margin-top: 0;
+  overflow: auto;
+  padding: 20px;
+  position: absolute;
+  top: 0 !important;
+  width: 460px;
+  z-index: 9999;
+}
+ .delete_variants_popup {
+  background: #fff none repeat scroll 0 0;
+  border: 1px solid;
+  height: 200px;
+  left: 50%;
+  margin-left: -230px;
+  margin-top: 0;
+  overflow: auto;
+  padding: 20px;
+  position: absolute;
+  top: 0 !important;
+  width: 460px;
+  z-index: 9999;
+}
+          .ajax_image_popup {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid;
+    height: 200px;
+    left: 50%;
+    margin-left: -100px;
+    margin-top: -100px;
+    overflow: auto;
+    padding: 20px;
+    position: fixed;
+    text-align: center;
+    top: 50% !important;
+    width: 200px;
+    z-index: 9999;
+}
+           
+.variant_edit_popup .product_images_edit_li {
+    
+    width: 120px;
+}
+   .variant_edit_popup2 .product_images_edit_li {
+    
+    width: 120px;
+}
+.product-edit-images h2 {
+  float: left;
+}
+.variant_edit_image img {
+    max-width: 100%;
+	    max-height: 100%;
+}
+.product_images_edit_li {
+    float: left;
+    margin-right: 10px;
+    width: 150px;
+    position: relative;
+	list-style: none;
+	min-height: 120px;
+}
+.product_images_edit_ul {
+  display: inline-block;
+  margin-bottom: 0;
+  margin-top: 20px;
+  width: 100%;
+}
+.button_part {
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+.product_edit_update {
+  background-color: #f45b4f;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  padding: 7px 30px;
+}
+           .product_edit_delete {
+  background-color: #f45b4f;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  padding: 7px 30px;
+  margin-left: 50px;
+}
+.product-edit-right-section .visiblity_section {
+  background: #f5f6f7 none repeat scroll 0 0;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  float: left;
+  padding: 15px; margin-bottom: 15px;
+  width: 100%;
+}
+.product-edit-right-section  .organization_part{
+  background: #f5f6f7 none repeat scroll 0 0;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  float: left;
+  padding: 15px; margin-bottom: 15px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.product-edit-left-section .product_title_description{
+  background-color: #ffffff;
+  border-radius: 3px; padding: 15px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); margin-bottom: 20px;
+}
+
+.product-edit-right-section h2 {
+  font-size: 1.14286rem;
+  font-weight: 600;
+  line-height: 1.71429rem;
+  margin-bottom: 20px;
+}
+.product_app_subheading, .next-input-wrapper .product_directory {
+  font-size: 1rem; 
+  cursor: pointer;
+  display: block;
+  font-size: 1.07143rem;
+  font-weight: 400;
+  letter-spacing: initial;
+  line-height: 1.42857rem;
+  margin-bottom: 5px;
+  text-transform: initial;
+}
+  .product-edit-right-section input[type="text"] {
+  border: 1px solid #d3dbe2;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.14286rem;
+  font-weight: 400;
+  letter-spacing: initial;
+  line-height: 1.71429rem;
+  padding: 5px 10px;
+  text-transform: initial;
+  width: 100%;
+}
+.next-input-wrapper .product_edit_title {
+  border: 1px solid #d3dbe2;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.14286rem;
+  font-weight: 400;
+  letter-spacing: initial;
+  line-height: 1.71429rem;
+  padding: 5px 10px;
+  text-transform: initial;
+  width: 100%;
+}
+.next-label {
+  cursor: pointer;
+  display: block;
+  font-size: 1.07143rem;
+  font-weight: 400;
+  letter-spacing: initial;
+  line-height: 1.42857rem;
+  margin-bottom: 5px;
+  text-transform: initial;
+  font-size: 1rem;
+}
+h2.product_app_heading {
+  font-size: 1.14286rem;
+  font-weight: normal;
+  line-height: 1.71429rem;  
+  display: block !important;
+  text-transform: capitalize;
+}
+#product-outer-variants.next-card{
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+    width: 100%; display: inline-block;
+	position: relative;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.product-edit-popup .button_part {
+  padding: 20px 0;
+}
+
+.close-popup {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 40px;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+  .close-popup-delete {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 40px;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+.close-popup2 {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+.close-popup3 {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+           .close-popup32 {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+           .close-popup_bulk_price, .close-popup_bulk_sku{
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+             .close-popup_bulk_weight{
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+.close-preview {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+           .close-editor {
+  background: #f45b4f none repeat scroll 0 0;
+  color: #fff;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 32px;
+  z-index: 9999999;
+  cursor: pointer;
+}
+.variant_edit_image {
+    display: inline-block;
+    float: left;
+    margin-right: 5px;
+  	cursor: pointer;
+    width: 53px;
+	height: 52px;
+}
+.variant_edit_popup img {
+    cursor: pointer;
+}
+.variant_edit_popup2 img {
+    cursor: pointer;
+}
+.overlay_effect {
+    background: #000 none repeat scroll 0 0 !important;
+    height: 100%;
+    left: 0;
+    opacity: 0.7;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+.spannote {
+  display: inline-block;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+  width: 100%;
+}
+/*
+.product_images_edit_li > span {
+    color: #f45b4f;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: normal;
+    position: absolute;
+    right: 0;
+    top: -7px;
+}*/
+.product_edit_update_img {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+           .product_edit_update_img2 {
+    float: left;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+.image-layer span {
+    display: inline-block;
+    margin-right: 5px;
+    width: 20px;
+}
+.image-layer {
+    bottom: 5px;
+    position: absolute;
+    left: 10px;
+}
+span.preview_icon {
+    background: url(https://app.editorify.com/app/preview.jpg);
+    width: 16px;
+    height: 16px;
+  cursor: pointer;
+}
+span.delete_icon {
+    background: url(https://app.editorify.com/app/delete.png);
+    width: 16px;
+    height: 16px;
+  cursor: pointer;
+}
+span.edit_icon {
+    background: url(https://app.editorify.com/app/edit_icon.png);
+    width: 16px;
+    height: 16px;
+  cursor: pointer;
+}
+.variant_edit_options span {
+    float: left;
+    margin-right: 5px;
+}
+.variant_edit_options {
+    display: inline-block;
+    width: 100%;
+}
+.duplicate_variant span {
+    float: left;
+    margin-right: 5px;
+}
+.duplicate_variant {
+    display: inline-block;
+    width: 100%;
+}
+.variant_heading_width:first-child {
+    width: 57px;
+}
+.variant_heading_width {
+    width: 96px;
+    display: inline-block;
+    text-align: left;
+}
+span.variant_heading_image.variant_heading_width {
+    width: 55px;
+    margin-left: 18px;
+}
+   span.child_variants_check {
+    margin-top: 5px;
+} 
+  span.bulk_action {
+    width: 150px;
+    display: inline-block;
+}
+           .done_price, .done_sku, .setposition {
+    background: #f45b4f none repeat scroll 0 0;
+    float: right;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+              .done_weight {
+    background: #f45b4f none repeat scroll 0 0;
+    float: right;
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+           .error {
+    font-size: 14px;
+    color: red;
+    float: left;
+}
+           .delete_button {
+    background: #f45b4f;
+    color: #fff;
+    float: right;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+           .cancel_button {
+    float: right;
+    background: #f45b4f;
+    color: #fff;
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.product_edit_update_img2 {    
+    position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px !important;
+    margin-left: -100px !important;
+    z-index: 99999 !important;
+}
+  .product_edit_update_img { 
+     position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px !important;
+    margin-left: -100px !important;
+    z-index: 99999 !important;
+  }
+  .ajax_image_popup {
+     position: fixed;
+    top: 50% !important;
+    left: 50% !important;
+    margin-top: -100px !important;
+    margin-left: -100px !important;
+    z-index: 99999 !important;
+  }  
+.position_editor_popup {
+  background: rgb(255, 255, 255) none repeat scroll 0 0;
+  border: 1px solid;
+  display: none;
+  left: 50%;
+  padding: 40px;
+  position: fixed;
+  top: 50% !important;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  z-index: 999;
+}
+  .position_icon {
+  background: rgb(0, 0, 0) none repeat scroll 0 0;
+  border-radius: 4px;
+  line-height: normal;
+  text-align: center;
+  cursor: pointer;
+}
+  .positionloader {
+  display: none;
+  float: right;
+  margin-left: 10px;
+  margin-top: 10px;
+  width: 20px;
+}
+</style>
+
+<div class="product-edit-outer">
+<div class="edit_button" style="display:none;">Edit</div>
+  <div class="overlay_effect" style="display: none;"></div>
+<div class="product-edit-popup" style="display:none;">
+  <div class="close-popup">X</div>
+  <div class="shopify_domains" style="display:none;">
+  <input type="text" class="shopify_edit_url" value="{{ shop.url }}">
+    <input type="text" class="shopify_edit_permanent_url" value="{{ shop.permanent_domain }}">
+  </div>
+     
+  <div class="product_edit_id_div" style="display: none;"><input type="text" class="product_edit_id" name="product_edit_id" value="{{ product.id }}"></div>
+  <!-- Left Part -->
+  <div class="product-edit-left-section">
+  
+  <!-- Title and Description -->
+ 
+
+    <div class="product_title_description">
+      
+<div class="next-input-wrapper">
+  <label for="product-name" class="next-label">Title</label>
+  <input type="text" name="product_edit_title" value="{{ product.title }}" placeholder="Product Name" class="product_edit_title" id="product-name">
+</div>
+<div class="next-input-wrapper">
+  <h3 class="product_directory">Description</h3>
+  <textarea name="directory_description" class="product_edit_description" id="directory_description" class="input-xlarge" cols="80" rows="10">{{ product.description }}</textarea>  
+
+            
+
+            	<script> 
+                     setTimeout(function(){
+				CKEDITOR.replace( "directory_description" );
+					}, 2000);
+
+              </script>
+</div>
+      
+  </div>
+    
+    
+    
+  
+   <!-- Title and Description -->
+  
+   <!-- Image part -->
+  <div class="product-edit-images">
+    <div>
+    <h2 class="product_app_heading">Images</h2>
+    <div class="product_add_images">Add Images</div>
+    </div>
+    <!-- Product Add Images Popup -->
+    
+    <div class="product_add_images_popup" style="display:none;">
+      <div class="close-popup2">X</div>
+<form id="uploadimage" action="" method="post" enctype="multipart/form-data">
+<div id="image_preview" style="display:none;"><img id="previewing" src="noimage.png" /></div>
+<hr id="line">
+<div id="selectImage">
+<label>Select Your Image</label><br/>
+<input type="file" name="file" id="file" required />
+<input type="submit" value="Upload" class="submit" />
+</div>
+</form>
+
+<h4 id="loading" style="display:none;">loading..</h4>
+<div id="message"></div>
+    </div>
+    
+     <!-- Product Add Images Popup -->
+    <ul class="product_images_edit_ul">
+    {% for image in product.images %}
+                <li class="product_images_edit_li product_images_updated{{ forloop.index }}">
+                    <img src="{{ image.src | img_url: "grande" }}" data-id="{{ image.id }}" alt="{{ image.alt | escape }}">
+                 <div class="image-layer" style="display:none;">
+                   <span class="preview_icon"></span>
+                   <span class="delete_icon"></span>
+                   <span class="edit_icon"></span>
+                  <span class="position_icon" style="color:#fff" title="Set Image Position">P</span>
+                  </div>
+                   <!-- Image editor popup -->
+    <!-- Product Images preview Popup -->
+    <div class="image_editor_popup" style="display: none;">
+      <div id="content{{ forloop.index }}">
+    <div class="container">
+      <section class="copy">
+      <div class="figure-wrapper">
+          <figure class="image-container target">
+            <img  crossOrigin="Anonymous" src="{{ image.src | img_url: "grande" }}" alt="DomoKun" class="image_editor_inner" id="target{{ forloop.index }}">
+
+          </figure>
+        </div>
+      </section>
+        </div>
+      </div>
+      
+    <div class="close-editor">X</div>
+    </div>
+		<div class="position_editor_popup" data-id="{{ image.id }}">
+		<div class="close-preview">X</div>
+		<p>Set image position</p>
+		<input type="text" class="inputbox">
+		<img class="positionloader" src="https://app.editorify.com/app/preloader.gif">
+		<div class="setposition">Set Position</div>
+
+		</div>
+                </li>
+      <script>
+        setTimeout(function() {
+        var product_id = $(".product_edit_id").val();
+  
+  var shop_url = $(".shopify_edit_url").val();
+    var shop_permanent_url = $(".shopify_edit_permanent_url").val();
+        
+        
+    var dkrm{{ forloop.index }} = new Darkroom("#target{{ forloop.index }}", {
+      // Size options
+      minWidth: 100,
+      minHeight: 100,
+      maxWidth: 600,
+      maxHeight: 500,
+      ratio: 4/3,
+      backgroundColor: "#000",
+
+      // Plugins options
+      plugins: {
+        save: {
+          callback: function() {
+            this.darkroom.selfDestroy(); // Cleanup
+             var newImage{{ forloop.index }} = dkrm{{ forloop.index }}.canvas.toDataURL();
+      
+           
+           // $(".editedimg").attr("src",newImage);
+            fileStorageLocation = newImage{{ forloop.index }};
+           
+      			
+                $(".image_editor_popup").hide();
+      			$(".ajax_image_popup").css("position","fixed");
+       			$(".ajax_image_popup").show();
+      		 $.ajax({ 
+               
+             url: "https://app.editorify.com/app/update_edited_images.php",
+//       contentType: "application/json",
+	 dataType: "json",
+      type: "POST",
+      data: { 
+        shop_url: shop_url,
+        shop_permanent_url: shop_permanent_url,
+        product_id: product_id,
+        image_id: image_id,
+        path: newImage{{ forloop.index }},
+        position:{{ forloop.index }} 
+      },       
+      error: function(data) {
+        $(".ajax_image_popup").hide();
+        alert("Something went wrong. Please Try Again.");
+      },         
+      success: function(data) {
+       //location.reload();
+      //  data=JSON.parse(data);
+     //var images_array_data = data;
+        var image_id = data.id;
+        var image_src = data.src;
+        $(".product_images_updated{{ forloop.index }}").children("img").attr("src",image_src);
+          $(".product_images_updated{{ forloop.index }}").children("img").attr("data-id",image_id);
+        console.log(image_id);
+        console.log(image_src);
+        $(".ajax_image_popup").hide();
+       // console.log("images array data: "+images_array_data);
+       // $(".product_images_edit_li:last-child img").attr("data-id",data);
+      
+      }
+      
+    });
+      
+            
+          }
+        },
+        crop: {
+          quickCropKey: 67, //key "c"
+          //minHeight: 50,
+          //minWidth: 50,
+          //ratio: 4/3
+        }
+      },
+
+      // Post initialize script
+      initialize: function() {
+        var cropPlugin = this.plugins["crop"];
+        // cropPlugin.selectZone(170, 25, 300, 300);
+        cropPlugin.requireFocus();
+      }
+    });
+          }, 200);
+  </script>
+              {% endfor %}
+    </ul>
+    <!-- Product Images preview Popup -->
+    <div class="product_preview_popup" style="display: none;">
+    <div class="close-preview">X</div>
+    </div>
+    
+  </div>
+  
+  <!-- Image part -->
+  
+  <!-- Variants Part -->
+  <div id="product-outer-variants" class="next-card">
+    <div class="variant_edit_popup" style="display:none;">
+    <div class="close-popup3">X</div>
+    </div>
+    <div class="variant_edit_popup2" style="display:none;">
+    <div class="close-popup32">X</div>
+    </div>
+    <div class="delete_variants_popup" style="display:none;">
+    <div class="close-popup-delete">X</div>
+      <h2>Are you sure you want to delete the selected variants?</h2>
+      <p>You cannot recover deleted product variants, do you wish to continue?</p>
+      <div class="delete_button">Delete</div>
+      <div class="cancel_button">Cancel</div>
+      
+    </div>
+    <div class="ajax_image_popup" style="display:none;">
+      <div class="ajax_image"><img src="https://app.editorify.com/app/ajax_loader.gif"></div>
+    </div>
+    
+    {% assign duplicate = "yes" %}
+    {% if product.variants.size == 1 %}
+    {% for variant in product.variants %}
+    {% if variant.title == "Default Title" %}
+    {% assign duplicate = "no" %}
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    
+    {% if duplicate == "yes" %}
+    <div style="display:inline-block; width: 100%;">
+<h2 class="product_app_heading">Variants</h2>
+    <div class="product_add_variant">Add Variants</div>
+    </div>
+    {% endif %}
+    <div class="all_edit_variants">
+      <span class="all_variants_check"><input type="checkbox" value="all_variants_checkbox"></span>
+      <div class="bulk_price_popup" style="display:none;">
+        <div class="close-popup_bulk_price">X</div>
+        <input type="text" name="bulk_price_input" class="bulk_price_unit" required value="" placeholder="Enter Price">
+        <div class="error" style="display:none;">Please Enter Some Value</div>
+        <input type="text" name="bulk_compare_price_input" class="bulk_compare_price_unit" required value="" placeholder="Enter Compare Price">
+        
+        <div class="done_price">Done</div>
+      </div>
+      <div class="bulk_weight_popup" style="display:none;">
+        <div class="close-popup_bulk_weight">X</div>
+        <input type="text" name="bulk_weight_input" class="bulk_weight_unit" required value="" placeholder="Enter Weight">
+        <div class="error" style="display:none;">Please Enter Some Value</div>
+       
+        <div class="done_weight">Done</div>
+      </div>
+	  <div class="bulk_sku_popup" style="display:none;">
+        <div class="close-popup_bulk_sku">X</div>
+        <input type="text" name="bulk_sku_input" class="bulk_sku_unit" required value="" placeholder="Enter Sku">
+        <div class="error" style="display:none;">Please Enter Sku</div>
+       
+        <div class="done_sku">Done</div>
+      </div>
+     <span class="bulk_action">
+      <select>
+  <option value="bulk">Bulk actions</option>
+  <option value="change_price">Change Price</option>
+  <option value="change_weight">Change Weight</option>
+  <option value="change_sku">Change Sku</option>
+  <option value="update_images">Update Images</option>
+  <option value="delete_variants">Delete Variants</option>
+  
+</select>
+      </span>
+      <br>
+      <span class="variant_heading_image variant_heading_width">Image</span>
+    {% for option in product.options %}
+      <span class="option_edit_title variant_heading_width"> {{ option }}</span>
+{% endfor %}
+      {% capture option_size %}{{ product.options.size }}{% endcapture %}
+     <span class="variant_heading_price variant_heading_width">Price</span>
+      <span class="variant_heading_compare_price variant_heading_width">Compare Price</span>
+      <span class="variant_heading_sku variant_heading_width">Sku</span>
+      <span class="variant_heading_weight variant_heading_width">Weight</span>
+       {% for variant in product.variants %}
+      <div class="variant_edit_options">
+        <span class="child_variants_check"><input type="checkbox" value="child_variants_checkbox"></span>
+        <span class="variant_edit_image"><img src="{{ variant.image.src | img_url: "small" }}" data-id="{{ variant.image.id }}"></span>
+          
+        {% assign variant_titles = variant.title | split: " / " %}
+          <span class="variant_edit_id" style="display: none;">{{ variant.id }}</span>
+        {% for variant_title in variant_titles %}
+        
+<span class="variant_edit_title variant_edit_option{{ forloop.index }}">
+  <input type="text" value="{{ variant_title }}" name="variant_edit_title">
+  
+        </span>
+
+        {% endfor %}
+        <span class="variant_edit_price_sku">
+          <input type="text" class="variant_edit_price" value="{{ variant.price | money_without_currency }}" name="variant_edit_price">
+          <input type="text" class="variant_edit_price2" value="{{ variant.compare_at_price | money_without_currency }}" name="variant_edit_price">
+          
+  <input type="text" class="variant_edit_sku" value="{{ variant.sku }}" name="variant_edit_sku">
+   <input type="text" class="variant_edit_weight" value="{{ variant.weight | weight_with_unit | remove: variant.weight_unit | remove: "" | remove: "k" | remove: "lb" | remove: "oz"  }}" name="variant_edit_weight">
+           <input type="hidden" class="variant_edit_weight_unit" value="{{ variant.weight_unit }}" name="variant_edit_weight_unit">
+   
+        </span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <!-- Variants Part End -->
+  </div>
+   <!-- Left Part End -->
+  
+  
+  
+  <!-- Right Part -->
+  <div class="product-edit-right-section">
+  <!--  <div class="visiblity_section">
+      <h2 class="product_app_heading">Visiblity</h2>
+      <div class="visiblity_section_inner">
+        <input type="checkbox" class="visiblity_checkbox" name="Online Store" Value="">
+      </div>
+    </div>-->
+    
+    <div class="organization_part">
+      <h2 class="product_app_heading">Organization</h2>
+      <div class="organization_inner">
+        <div class="product_type">
+          <h3 class="product_app_subheading">Product Type</h3>
+          <input type="text" name="product_type" class="product_edit_type" value="{{ product.type }}">
+        </div>
+        <div class="product_vendor">
+          <h3 class="product_app_subheading">Vendor</h3>
+          <input type="text" name="product_vendor" class="product_edit_vendor" value="{{ product.vendor }}">
+        </div>
+        <!--
+        <div class="product_collection">
+          <h3 class="product_app_subheading">Collections</h3>
+          <input type="text" name="product_vendor" value="">
+        </div>-->
+        <div class="product_tags">
+          <h3 class="product_app_subheading">Tags</h3>
+          {% for tag in product.tags %}
+          {% capture tags %}{{ tag }}{% endcapture %}
+    
+{% endfor %}
+          <input type="text" name="product_tags" class="product_edit_tags" value="{% for tag in product.tags %}{{ tag }}{% if forloop.last == true %}{% else %},{% endif %}{% endfor %}">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="product-edit-right-section">
+  <div class="note_part">Note: if product description does not loaded, simply refresh the page.</div>
+  </div>
+  <!-- Right Part -->
+  
+  
+  
+  
+  
+  
+  
+  <div class="button_part">
+  
+    <span class="product_edit_update">Update</span>
+    <span class="product_edit_update_img" style="display: none;"><img src="https://app.editorify.com/app/preloader.gif"></span>
+    <span class="product_edit_delete">Delete Product</span>
+    <span class="product_edit_update_img2" style="display: none;"><img src="https://app.editorify.com/app/ajax-loader.gif"></span>
+   <span class="spannote">* it may take 30 seconds to update all the variants (refresh your product page once it’s done)</span>
+  </div>
+  
+        </div>
+</div>   
+ 

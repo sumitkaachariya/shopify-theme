@@ -1,0 +1,78 @@
+
+{% if linklists[brands-linklist].links.size > 0 %}
+
+    <!– BEGIN table.products –>
+
+    <table class="products">
+
+      {% tablerow link in linklists[brands-linklist].links cols: 4 %}
+
+      <div class="collection_image_wrapper one-third column thumbnail" style="display: inline-block;">
+
+        <a href='{{ link.url }}' title="Browse our {{ link.object.title | escape }} collection.">
+
+          {% if link.object.image.src %}
+
+          <!– collection image –>
+
+          <div class="collection_image_faded" style="width:220px; height:180px; margin: 0 auto; background:url('{{ link.object.image.src | collection_img_url: 'medium' }}'); background-size: contain;  background-repeat: no-repeat;  background-position: 50%;" ></div>
+
+          {% else %}
+
+          <div class="collection_image_faded" style="width:220px; height:180px; margin: 0 auto; background:url('{{ link.object.products.first.featured_image | product_img_url: 'large' }}'); background-size: contain;  background-repeat: no-repeat;  background-position: 50%;" ></div>
+
+          {% endif %}
+          <br/>
+          <span class="info" >{{ link.title }}</span>
+
+        </a>
+      </div>
+
+   {% endtablerow %}
+    </table>
+    <!– END table.products –>
+
+    {% else %}
+
+    <p>Please {{ ‘create a link list’ | link_to: ‘/admin/links’ }} that contains links to the collections you wish to feature here. The title of that link list must be <strong>{{ linklist | replace: ‘-’, ‘ ‘ | capitalize }}</strong>.</p>
+
+    {% endif %}
+ 
+<style>
+  .collection_image_faded {
+   opacity: 0.85;
+   transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -webkit-transition: opacity .5s ease-in-out;
+   }
+
+   .collection_image_faded:hover {
+      opacity: 1;
+    }
+  
+  .collection_image_wrapper .info  {
+   opacity: 0;
+   transition: opacity .5s ease-in-out;
+   -moz-transition: opacity .5s ease-in-out;
+   -webkit-transition: opacity .5s ease-in-out;
+   }
+
+   .collection_image_wrapper:hover .info  {
+      opacity: 1;
+    }
+  table.products{
+	margin: 0 auto;
+	}
+    .container .one-third.column {
+          width: 298px;
+    }
+  span.info{
+	width:220px;
+    display: block;
+    text-align: center!important;
+    margin: 0 auto;
+  }
+  .collection_image_wrapper > a:hover{
+  	outline: 2px solid #f5f5f5;
+  }
+</style>

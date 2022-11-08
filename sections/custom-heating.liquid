@@ -1,0 +1,384 @@
+<div id="shopify-{{section.id}}" class="shopify-section custom-collection">
+<div class="collection_top"> 
+<div class="sidebar four columns">
+  <div id="colnav">
+    <h4>{{section.settings.linklist_title}}</h4>
+    <div class="colnav_inner">
+      <ul>
+      {% for link in linklists[section.settings.col_linklist].links %}
+        <li {% if link.active %}class="Selected"{% endif %}>
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="twelve columns">
+  <div id="homepage_slider" class="flexslider">
+  <ul class="slides">
+  {% if section.settings.banner_image != blank %}
+ <li class="collection_banner">
+   {% if section.settings.banner_link != blank %}
+   <a href="{{section.settings.banner_link}}">
+     {% endif %}
+        <img src="{{section.settings.banner_image | img_url: "original" }}" alt="{{section.settings.banner_title}}"/>
+        {% if section.settings.banner_title != blank %}   
+     <div class="collection_caption">
+          <h2>{{section.settings.banner_title}}</h2>
+       {% if section.settings.banner_btn != blank %}  
+          <button class="btn">{{section.settings.banner_btn}}</button>
+       {% endif %}
+        </div>
+     {% endif %}
+   {% if section.settings.banner_link != blank %}
+   </a>
+   {% endif %}
+ </li>
+  {% endif %}
+    {% if section.settings.banner_image1 != blank %}
+ <li class="collection_banner">
+   {% if section.settings.banner_link1 != blank %}
+   <a href="{{section.settings.banner_link1}}">
+     {% endif %}
+        <img src="{{section.settings.banner_image1 | img_url: "original" }}" alt="{{section.settings.banner_title1}}"/>
+        {% if section.settings.banner_title1 != blank %}   
+     <div class="collection_caption">
+          <h2>{{section.settings.banner_title1}}</h2>
+       {% if section.settings.banner_btn1 != blank %}  
+          <button class="btn">{{section.settings.banner_btn1}}</button>
+       {% endif %}
+        </div>
+     {% endif %}
+   {% if section.settings.banner_link1 != blank %}
+   </a>
+   {% endif %}
+ </li>
+  {% endif %}
+    {% if section.settings.banner_image2 != blank %}
+ <li class="collection_banner">
+   {% if section.settings.banner_link2 != blank %}
+   <a href="{{section.settings.banner_link2}}">
+     {% endif %}
+        <img src="{{section.settings.banner_image2 | img_url: "original" }}" alt="{{section.settings.banner_title2}}"/>
+        {% if section.settings.banner_title2 != blank %}   
+     <div class="collection_caption">
+          <h2>{{section.settings.banner_title2}}</h2>
+       {% if section.settings.banner_btn2 != blank %}  
+          <button class="btn">{{section.settings.banner_btn2}}</button>
+       {% endif %}
+        </div>
+     {% endif %}
+   {% if section.settings.banner_link2 != blank %}
+   </a>
+   {% endif %}
+ </li>
+  {% endif %}
+    {% if section.settings.banner_image3 != blank %}
+ <li class="collection_banner">
+   {% if section.settings.banner_link3 != blank %}
+   <a href="{{section.settings.banner_link3}}">
+     {% endif %}
+        <img src="{{section.settings.banner_image3 | img_url: "original" }}" alt="{{section.settings.banner_title3}}"/>
+        {% if section.settings.banner_title3 != blank %}   
+     <div class="collection_caption">
+          <h2>{{section.settings.banner_title3}}</h2>
+       {% if section.settings.banner_btn3 != blank %}  
+          <button class="btn">{{section.settings.banner_btn3}}</button>
+       {% endif %}
+        </div>
+     {% endif %}
+   {% if section.settings.banner_link != blank %}
+   </a>
+   {% endif %}
+ </li>
+  {% endif %}
+    {% if section.settings.banner_image4 != blank %}
+ <li class="collection_banner">
+   {% if section.settings.banner_link4 != blank %}
+   <a href="{{section.settings.banner_link4}}">
+     {% endif %}
+        <img src="{{section.settings.banner_image4 | img_url: "original" }}" alt="{{section.settings.banner_title4}}"/>
+      {% if section.settings.banner_title4 != blank %}   
+     <div class="collection_caption">
+          <h2>{{section.settings.banner_title4}}</h2>
+       {% if section.settings.banner_btn4 != blank %}  
+          <button class="btn">{{section.settings.banner_btn4}}</button>
+       {% endif %}
+        </div>
+     {% endif %}
+   {% if section.settings.banner_link != blank %}
+   </a>
+   {% endif %}
+ </li>
+  {% endif %}
+  </ul>
+  </div>
+  </div>
+  </div>
+
+  <div class="sixteen columns">
+  {% assign col_per_row = section.settings.col_per_row %}
+<div class="custom-collection-list">
+  <h5>{{section.settings.col_list_title}}</h5>
+  {% for block in section.blocks %}
+  	<div class="text-center custom_col_item {% if col_per_row == "2" %}eight columns {% cycle 'alpha', 'omega' %}{% elsif col_per_row == "4" %}four columns {% cycle 'alpha', '', '', 'omega' %}{% else %}two columns {% cycle 'alpha', '', '', '', '', 'omega' %}{% endif %} {% cycle 'even', 'odd' %}">
+      {% if block.settings.col_link != blank %}<a href="{{ block.settings.col_link }}">{% endif %}
+      
+      	{% if block.settings.col_image != blank %}  
+      	<div class="custom_col_img">
+          <img src="{{ block.settings.col_image | img_url: 'original' }}" alt="{{ block.settings.col_title }}" />
+        </div>
+        {% endif %}
+      
+        {% if block.settings.col_title != blank %}
+        <span>{{ block.settings.col_title }}</span>
+        {% endif %}
+      
+     {% if block.settings.col_link != blank %}</a>{% endif %}
+  	</div>
+  
+  {% capture new_row %}
+    <br class="clear product_clear" />
+{% endcapture %}
+  
+  {% if col_per_row == "2" %}
+          {% cycle '', new_row %}
+        {% elsif col_per_row == "3" %}
+          {% cycle '', '', new_row %}    
+        {% elsif col_per_row == "4" %}  
+          {% cycle '', '', '', new_row %}
+        {% endif %}      
+  
+  {% endfor %}
+  
+</div>
+
+  {% if section.settings.enable_best_sellers %}
+  <div class="text-center best_sellers">
+    <br><h5>Shop Best Sellers</h5>
+    <div class="best_sellers_products">
+      {% assign current_collection = collection.handle %}
+      {% assign products = collections.best-sellers.products %}
+      {% assign products_per_row = settings.products_per_row %}
+      {% assign limit = section.settings.best_sellers_limit | plus: 1 %}
+      {% include 'custom-product-loop' with settings.collection_sidebar %}
+    </div>
+  </div>
+   {% endif %}
+  <hr><br>
+</div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection - heating",
+    "settings": [
+	{
+        "type": "text",
+        "id": "linklist_title",
+        "label": "Sidebar LinkList Title"
+      },
+	  {
+        "type": "link_list",
+        "id": "col_linklist",
+        "label": "Sidebar Link List"
+      },
+	  {
+        "type": "header",
+        "content": "Collection Slideshow"
+      },
+{
+        "type": "header",
+        "content": "Slide 1"
+      },
+	  {
+        "type": "image_picker",
+        "id": "banner_image",
+        "label": "Image"
+      },
+{
+        "type": "text",
+        "id": "banner_title",
+        "label": "Banner Title"
+      },
+{
+        "type": "url",
+        "id": "banner_link",
+        "label": "Banner Link"
+      },
+{
+        "type": "text",
+        "id": "banner_btn",
+        "label": "Banner Button Label"
+      },
+{
+        "type": "header",
+        "content": "Slide 2"
+      },
+{
+        "type": "image_picker",
+        "id": "banner_image1",
+        "label": "Image"
+      },
+{
+        "type": "text",
+        "id": "banner_title1",
+        "label": "Banner Title"
+      },
+{
+        "type": "url",
+        "id": "banner_link1",
+        "label": "Banner Link"
+      },
+{
+        "type": "text",
+        "id": "banner_btn1",
+        "label": "Banner Button Label"
+      },
+{
+        "type": "header",
+        "content": "Slide 3"
+      },
+{
+        "type": "image_picker",
+        "id": "banner_image2",
+        "label": "Image"
+      },
+{
+        "type": "text",
+        "id": "banner_title2",
+        "label": "Banner Title"
+      },
+{
+        "type": "url",
+        "id": "banner_link2",
+        "label": "Banner Link"
+      },
+{
+        "type": "text",
+        "id": "banner_btn2",
+        "label": "Banner Button Label"
+      },
+{
+        "type": "header",
+        "content": "Slide 4"
+      },
+{
+        "type": "image_picker",
+        "id": "banner_image3",
+        "label": "Image"
+      },
+{
+        "type": "text",
+        "id": "banner_title3",
+        "label": "Banner Title"
+      },
+{
+        "type": "url",
+        "id": "banner_link3",
+        "label": "Banner Link"
+      },
+{
+        "type": "text",
+        "id": "banner_btn3",
+        "label": "Banner Button Label"
+      },
+{
+        "type": "header",
+        "content": "Slide 5"
+      },
+{
+        "type": "image_picker",
+        "id": "banner_image4",
+        "label": "Image"
+      },
+{
+        "type": "text",
+        "id": "banner_title4",
+        "label": "Banner Title"
+      },
+{
+        "type": "url",
+        "id": "banner_link4",
+        "label": "Banner Link"
+      },
+{
+        "type": "text",
+        "id": "banner_btn4",
+        "label": "Banner Button Label"
+      },
+{
+        "type": "header",
+        "content": "Best Sellers"
+      },
+{
+          "id": "enable_best_sellers",
+          "type": "checkbox",
+          "label": "Enable Best Sellers?"          
+        },
+{
+        "type": "header",
+        "content": "Collection List"
+      },
+{
+        "type": "text",
+        "id": "col_list_title",
+        "label": "Collection List Title"
+      },
+{
+        "type": "select",
+        "id": "col_per_row",
+        "label": "Collections Per Row",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      }
+	],
+    "blocks": [
+	{
+      "type": "image",
+      "name": "Add Collection",
+	  "settings": [
+        {
+          "type": "image_picker",
+          "id": "col_image",
+          "label": "Collection Image"
+        },
+		{
+          "type": "text",
+          "id": "col_title",
+    	  "label": "Collection Title"
+        },
+		{
+          "type": "url",
+          "id": "col_link",
+    	  "label": "Collection Link"
+        }
+	   ]
+	  }
+    ],
+    "presets": [{
+      "name": "Collection - heating",
+      "category": "Global"
+    }]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,49 @@
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    {{ page.title }}
+  </h1>
+</div>
+
+<div class="sixteen columns page">
+    {{ page.content }}
+  
+  	<br/>
+  
+  	<div class="sixteen columns">
+      <div class="ten columns alpha thumbnail text-left" >
+        <h1>{{ settings.testimonial_heading }}</h1>
+        <span class="head-devider"></span>
+        <div class="five columns alpha thumbnail text-left">
+            <p>{{ settings.testimonial_p_1 }}</p>
+        	<a class="about_link" href="/pages/about-us">Read About Us</a>
+        </div>
+        <div class="five columns alpha thumbnail text-left">
+            <p>{{ settings.testimonial_p_2 }}</p>
+        </div>
+      </div> 
+      <div class="six columns omega thumbnail text-left" >
+        <div class="about_us_right" id="prentTestimonial" style="display:none;">
+          
+        {% for i in (1..10) %} 
+          {% capture show_testimonial %}show_testimonial_{{ i }}{% endcapture %}
+          {% capture testimonial_author %}testimonial_author_{{ i }}{% endcapture %}
+          {% capture testimonial_desc %}testimonial_desc_{{ i }}{% endcapture %}
+          
+          {% if settings[show_testimonial] %}
+          <div class="home-testimonial" >
+            <p>{{ settings[testimonial_desc] }}</p>
+              <h3>- {{ settings[testimonial_author] }} </h3>
+          </div>
+          {% endif %}
+        {% endfor %}  
+          
+        
+      </div>
+      </div>
+  	</div>  
+  
+  
+</div>
+
+
+ 

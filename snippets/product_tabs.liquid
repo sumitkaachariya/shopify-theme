@@ -1,0 +1,240 @@
+{% assign productDetails = product.metafields.productDetails %}
+{% assign producttab1 = 'tab_name_1' %}
+{% assign producttab2 = 'tab_name_2' %}
+{% assign producttab3 = 'tab_name_3' %}
+{% assign producttab4 = 'tab_name_4' %}
+{% assign producttab5 = 'tab_name_5' %}
+{% assign producttab6 = 'tab_name_6' %}
+{% assign producttab7 = 'tab_name_7' %}
+{% assign producttab8 = 'tab_name_8' %}
+{% assign producttab9 = 'tab_name_9' %}
+{% assign producttab10 = 'tab_name_10' %}
+
+{% assign productdesc1 = 'tab_desc_1' %}
+{% assign productdesc2 = 'tab_desc_2' %}
+{% assign productdesc3 = 'tab_desc_3' %}
+{% assign productdesc4 = 'tab_desc_4' %}
+{% assign productdesc5 = 'tab_desc_5' %}
+{% assign productdesc6 = 'tab_desc_6' %}
+{% assign productdesc7 = 'tab_desc_7' %}
+{% assign productdesc8 = 'tab_desc_8' %}
+{% assign productdesc9 = 'tab_desc_9' %}
+{% assign productdesc10 = 'tab_desc_10' %}
+
+{% assign producttabs = 'show_product_tab' %}
+
+{% if productDetails[producttabs] == '1' %}
+    {% unless productDetails == empty %}
+
+        {% assign producttabwidth = '100%' %}
+
+        {% if productDetails[producttab1] != blank %}
+            {% assign producttabwidth = '100%' %}
+        {% endif %}
+
+        {% if productDetails[producttab2] != blank %}
+            {% assign producttabwidth = '50%' %}
+        {% endif %}
+
+        {% if productDetails[producttab3] != blank %}
+            {% assign producttabwidth = '33%' %}
+        {% endif %}
+
+		{% if productDetails[producttab4] != blank %}
+            {% assign producttabwidth = '25%' %}
+        {% endif %}
+
+		{% if productDetails[producttab5] != blank %}
+            {% assign producttabwidth = '20%' %}
+        {% endif %}
+
+		{% if productDetails[producttab6] != blank %}
+            {% assign producttabwidth = '16.6%' %}
+        {% endif %}
+
+		{% if productDetails[producttab7] != blank %}
+            {% assign producttabwidth = '14.2%' %}
+        {% endif %}
+
+		{% if productDetails[producttab8] != blank %}
+            {% assign producttabwidth = '12.5%' %}
+        {% endif %}
+
+		{% if productDetails[producttab9] != blank %}
+            {% assign producttabwidth = '11%' %}
+        {% endif %}
+
+		{% if productDetails[producttab10] != blank %}
+            {% assign producttabwidth = '10%' %}
+        {% endif %}
+
+
+
+        <ul class="tabs">
+            {% if productDetails[producttab1] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="active" href="#tab1">{{ productDetails[producttab1] }}</a>
+                </li>
+            {% endif %}
+
+            {% if productDetails[producttab2] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab2">{{ productDetails[producttab2] }}</a>
+                </li>
+            {% endif %}
+
+            {% if productDetails[producttab3] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab3">{{ productDetails[producttab3] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab4] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab4">{{ productDetails[producttab4] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab5] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab5">{{ productDetails[producttab5] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab6] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab6">{{ productDetails[producttab6] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab7] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab7">{{ productDetails[producttab7] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab8] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab8">{{ productDetails[producttab8] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab9] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab9">{{ productDetails[producttab9] }}</a>
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab10] != blank %}
+                <li style="width: {{ producttabwidth }}; text-align: center;">
+                    <a class="" href="#tab10">{{ productDetails[producttab10] }}</a>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul class="tabs-content">
+            {% if productDetails[producttab1] != blank %}
+                <li class="active" id="tab1">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc1] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+
+            {% if productDetails[producttab2] != blank %}
+                <li class="" id="tab2">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc2] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+
+            {% if productDetails[producttab3] != blank %}
+                <li class="" id="tab3">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc3] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab4] != blank %}
+                <li class="" id="tab4">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc4] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab5] != blank %}
+                <li class="" id="tab5">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc5] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab6] != blank %}
+                <li class="" id="tab6">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc6] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab7] != blank %}
+                <li class="" id="tab7">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc7] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab8] != blank %}
+                <li class="" id="tab8">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc8] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab9] != blank %}
+                <li class="" id="tab9">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc9] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+          
+          	{% if productDetails[producttab10] != blank %}
+                <li class="" id="tab10">
+                    {% if settings.product_description_position == "bottom" %}
+                        <div class="description" itemprop="description">
+                            {{ productDetails[productdesc10] }}
+                        </div>
+                    {% endif %}
+                </li>
+            {% endif %}
+        </ul>
+
+    {% endunless %}
+{% endif %}
+
+

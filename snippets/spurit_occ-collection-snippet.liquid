@@ -1,0 +1,104 @@
+<script>
+    var OCC_SPURIT_Params = {
+        "id": "f8f87e7ed70e8f19bc2147ec367ca305",
+        "folderStore": "https://s3.amazonaws.com/shopify-apps/one-click-checkout/store/",
+        "folderCss": "https://s3.amazonaws.com/shopify-apps/one-click-checkout/css/",
+        "collectionHandle": "{{ collection.handle }}",
+        "money_format": "{{ shop.money_format }}",
+        "qvFormContainer": "#sca-qv-cartform",
+        "qvAddToCart": "input[type='submit']",
+        "cloneButton": false,
+        "clickEvent":"click",
+        "collection_add_to_cart": '',
+        "is_collection":true,
+        "is_quick_view":false,
+        "preOrderLineItemName":'Pre-ordered items',
+        "quantitySelector": "#quantity"
+    };
+    if(typeof(SPOParams) != "undefined"){
+        if(typeof(SPOCustom) == "undefined"){
+            var SPOCustom = { trackLineItemProperties: true };
+        }
+    }
+
+    OCC_SPURIT_Params.inventory = {};
+    {% for product in collection.products %}
+        {% for variant in product.variants %}
+            {% if variant.inventory_management == "shopify" %}
+                {% if variant.inventory_policy == 'deny' %}
+                OCC_SPURIT_Params.inventory[{{variant.id}}] = {{variant.inventory_quantity}};
+                {% endif%}
+            {% endif%}
+        {% endfor %}
+    {% endfor %}
+
+</script>
+
+<script id="spur-it-occ-popup-tmpl" type="text/x-jquery-tmpl">
+    <div id="spurit-occ-popup" class="spurit-occ-modal production">
+        <div class="spurit-occ-content">
+            <div class="spurit-occ-container spurit-occ-display-container spurit-occ-block">
+                <span class=" spurit-occ-modal-close spurit-occ-modal-close-popup spurit-occ-xlarge spurit-occ-display-topright spurit-occ-close-hover">
+                   <svg class="spurit-occ-closeButton" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path style="fill: inherit;" d="M11.414 10l4.293-4.293a.999.999 0 1 0-1.414-1.414L10 8.586 5.707 4.293a.999.999 0 1 0-1.414 1.414L8.586 10l-4.293 4.293a.999.999 0 1 0 1.414 1.414L10 11.414l4.293 4.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z" fill="#31373D" fill-rule="evenodd"/></svg>
+                </span>
+                <div class="spurit-occ-title">
+                  {=one_popup_title=}
+                </div>
+            </div>
+
+            <div class="spurit-occ-container spurit-occ-description">
+            {=one_popup_description=}
+            </div>
+            <div class="spurit-occ-cart-container spurit-occ-container">
+                <div class="spurit-occ-cart-content">
+
+                </div>
+            </div>
+            <div class="spurit-occ-container spurit-occ-subtotal-container">
+                <div class="spurit-occ-subtotal">
+                    <div class="spurit-occ-subtotal-label">Subtotal</div>
+                    <div class="spurit-occ-subtotal-common"><span class="spur-it-occ-total">{=total=}</span></div>
+                </div>
+            </div>
+            <div class="spurit-occ-container spurit-occ-buttons">
+                <div class="spurit-occ-shopping spurit-occ-shoppingButton">
+                    {=one_shopping_button_title=}
+                </div>
+                <div class="spurit-occ-buttons-right-container ">
+                    <div style="display:none;" class="spurit-occ-to-cart spurit-occ-toCartButton">{=one_to_cart_button_title=}</div>
+                    <a href="/checkout" class="spurit-occ-checkout spurit-occ-checkoutButton">{=one_checkout_button_title=}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script id="spur-it-occ-product" type="text/x-jquery-tmpl">
+<div class="spurit-occ-cart-item">
+    <input type="hidden" class="spur-it-occ-product-line" value="{=line=}">
+    <div class="spurit-occ-item-img">
+       <a href="{=url=}">
+          <img class="" src="{=image=}" alt="test">
+       </a>
+    </div>
+    <div class="spurit-occ-item-name">{=title=}</div>
+    <div class="spurit-occ-item-count">
+       <input type="number" min="1" value="{=quantity=}">
+    </div>
+    <div class="spurit-occ-item-price">
+       <span class="price">{=line_price=}</span>
+    </div>
+    <div class="spurit-occ-item-remove">
+     <span class="spurit-occ-modal-close spurit-occ-xlarge">
+       <svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M11.414 10l4.293-4.293a.999.999 0 1 0-1.414-1.414L10 8.586 5.707 4.293a.999.999 0 1 0-1.414 1.414L8.586 10l-4.293 4.293a.999.999 0 1 0 1.414 1.414L10 11.414l4.293 4.293a.997.997 0 0 0 1.414 0 .999.999 0 0 0 0-1.414L11.414 10z" fill="#31373D" fill-rule="evenodd"/></svg
+     </span>
+    </div>
+</div>
+</script>
+
+<script id="spur-it-occ-line-item" type="text/x-jquery-tmpl">
+    <div class="spur-it-occ-line-item">{=name=}:{=value=}</div>
+</script><style>
+	#spurit-occ-popup{
+		z-index: 99999999;
+	}
+</style>

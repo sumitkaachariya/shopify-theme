@@ -1,0 +1,772 @@
+<script>
+  var levar_onload_variant_id = {{ product.selected_or_first_available_variant.id | json }};
+  window.levar_onload_variant_id = levar_onload_variant_id;
+</script>
+<div class="sixteen columns">
+  <div class="clearfix breadcrumb">
+    <div class="right mobile_hidden">
+    </div>
+    {% if settings.product_breadcrumb %}
+      <div class="breadcrumb_text" itemscope itemtype="http://schema.org/BreadcrumbList">
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"><a href="{{ shop.url }}" title="{{ shop.name | escape }}" itemprop="item"><span itemprop="name">{{ 'general.breadcrumbs.home' | t }}</span></a></span> 
+        &nbsp; / &nbsp;
+        <span itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+          {% if collection %}
+            <a href="{{ collection.url }}" title="{{ collection.title | escape }}" itemprop="item"><span itemprop="name">{{ collection.title }}</span></a>
+          {% else %}
+            <a href="/collections/all" title="{{ collections.all.title }}" itemprop="item"><span itemprop="name">{{ collections.all.title }}</span></a>     
+          {% endif %}
+        </span>
+        &nbsp; / &nbsp;
+        {{ product.title }}
+      </div>
+    {% endif %}
+ 
+  </div>
+</div>
+
+{% if settings.product_sidebar %}
+  {% include 'sidebar' %}
+  <div class="twelve columns">
+    <div class="product-{{ product.id }}">
+{% else %}
+  <div class="sixteen columns">
+    <div class="product-{{ product.id }}">
+{% endif %}
+
+	<div class="section product_section clearfix" itemscope itemtype="http://schema.org/Product">
+{% comment %}{% if product.metafields.loox.num_reviews %}
+	<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+		<meta itemprop="ratingValue" content="{{ product.metafields.loox.avg_rating }}"/>
+		<meta itemprop="ratingCount" content="{{ product.metafields.loox.num_reviews }}"/>
+	</div>
+{% endif %}{% endcomment %}
+    
+      <script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+    <meta itemprop="url" content="{{ shop.url }}{{ product.url }}" />
+	<meta itemprop="image" content="{{ product.featured_image.src | product_img_url: 'grande' }}" />
+	  
+  	 {% if settings.product_images_position == 'left' %}             
+       <div class="product_images_column {% if settings.product_sidebar %}seven{% else %}nine{% endif %} columns {% if product-images == blank %}{% if settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %}">
+         {% if product.metafields.direct_qr['active'] %}
+            <button id="levar-direct-qr-hotspot-button" onClick="levARActivationHelper('Hotspot - QR');" class="button btn levar-button levar-active"><div class="levar-button-icon"><svg width="40" height="40" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6:96)"><path d="M20.6346 9.84585C21.1218 10.4831 21.1218 11.3434 20.6346 11.9797C19.1 13.9829 15.4183 18.1077 11.1198 18.1077C6.82131 18.1077 3.13955 13.9829 1.60497 11.9797C1.36793 11.6745 1.23926 11.2991 1.23926 10.9128C1.23926 10.5264 1.36793 10.151 1.60497 9.84585C3.13955 7.84257 6.82131 3.7178 11.1198 3.7178C15.4183 3.7178 19.1 7.84257 20.6346 9.84585V9.84585Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.1198 13.9963C12.8228 13.9963 14.2033 12.6157 14.2033 10.9127C14.2033 9.20975 12.8228 7.82919 11.1198 7.82919C9.41678 7.82919 8.03622 9.20975 8.03622 10.9127C8.03622 12.6157 9.41678 13.9963 11.1198 13.9963Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_6:96"><rect width="22" height="22" fill="white" transform="translate(22 22) rotate(-180)"/></clipPath></defs></svg></div><span>View in My Space</span></button>
+         {% endif %}  
+         {% include 'product-images' %}
+        </div>
+     {% endif %}
+      
+     <div class="{% if settings.product_sidebar %}five{% else %}seven{% endif %} columns {%if settings.product_images_position == 'left' %}omega{% else %}alpha{% endif %}">
+                  
+      {% assign collection_handles = product.collections | map: 'handle' %}
+      {% assign variant = product.selected_or_first_available_variant %}
+
+       <h1 class="product_name" itemprop="name">{{ product.title }}</h1>
+       {% if settings.display_vendor %}
+          <p class="vendor">
+            <span itemprop="brand">{{ product.vendor | link_to_vendor }}</span>
+          </p>
+       {% endif %}
+    
+
+      {% if variant.sku != blank and settings.display_sku %}
+        <p class="sku">
+          <span itemprop="sku">{{ variant.sku }}</span>
+        </p>
+      {% endif %}
+       {% comment %}
+<div class="yotpo bottomLine"
+data-product-id="{{ product.id }}"
+data-product-models="{{ product.id }}"
+data-name="{{ product.title | escape }}"
+data-url="{{ page.url }}"
+data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+data-description="{{ product.description | escape }}"
+data-bread-crumbs="{% for tag in product.tags %}{{ tag | escape }};{% endfor %}">
+</div>{% endcomment %}
+       {% include 'judgeme_widgets', widget_type: 'judgeme_preview_badge', jm_style: '', concierge_install: true %}
+      {% unless collection_handles contains 'coming-soon' %}
+       <div class="brek-price columns">
+        <p class="modal_price" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}" />
+          <meta itemprop="seller" content="{{ shop.name | escape }}" />
+          <meta itemprop="availability" content="{% if product.available %}in_stock{% else %}out_of_stock{% endif %}" />
+          <meta itemprop="itemCondition" content="New" />
+
+          <span class="sold_out">{% if variant.available == false %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+          
+			<span itemprop="price" content="{{ variant.price | money_without_currency }}" class="{% if variant.compare_at_price > variant.price %}sale{% endif %}">
+
+              <span class="current_price">
+              {% if variant.available %}
+                {% if variant.price > 0 %} 
+                  {{ variant.price | money }} 
+                {% else %}
+                  {{ settings.free_price_text }}
+                {% endif %}
+              {% endif %}
+            </span>
+          </span>
+            <p class="instruction">
+            <span class="small-text">
+              {% if variant.price < variant.compare_at_price and variant.available %}	
+              Original Price:
+              {% endif %}
+              </span>
+            <span class="was_price small-text">
+            {% if variant.price < variant.compare_at_price and variant.available %}
+               {{ variant.compare_at_price | money }}
+            {% endif %}
+            </span>
+
+              <br/>	
+             <span class="small-text">
+                {% if variant.price < variant.compare_at_price and variant.available %}
+                Savings: {{ product.compare_at_price_max | minus:product.price | money  }}
+
+                ( {% if product.compare_at_price_max > product.price %}
+                {{ product.compare_at_price_min | minus: product.price | times: 100.0 | 
+                divided_by: product.compare_at_price_min | money_without_currency | times: 100 
+                | replace: '.0', ''}}%{% endif %})         
+              </span>          
+          	{% endif %}
+			</p> 			
+        
+        {% include 'product-notify-me' %}
+         
+         </div>
+
+         <div class="brek-discount columns">
+           <div class="instruct-head">Free Delivery</div>
+           <div class="instruct-body">Ships {{ product.metafields.c_f.shipping_type }} in {% if product.metafields.c_f.shipping_time %}{{ product.metafields.c_f.shipping_time }}{% else %}1-3 days{% endif %}</div>
+           <div class="instruct-body">
+             <script src="https://kit.fontawesome.com/bd9787e818.js" crossorigin="anonymous"></script>
+             {% assign from_var = false %}
+             {% capture fromshipping %}{% endcapture %}
+             {% for k in (1..15) %} 
+             	{% capture vendorname %}vendor_{{ k }}_name{% endcapture %}
+				{% capture shippingAddress %}vendor_{{ k }}_ship{% endcapture %}
+             
+             	{% capture nvendor %}{{ settings[vendorname] }}{% endcapture %}
+             	{% capture vendor %}{{ nvendor | downcase }}{% endcapture %}
+             
+             	{% capture pv %}{{ product.vendor }}{% endcapture %}
+             	{% capture productvendor %}{{ pv | downcase }}{% endcapture %}
+             	
+             	{% if productvendor == vendor %}
+             		{% assign from_var = true %}
+             		{% capture fromshipping %}{{ settings[shippingAddress] }}{% endcapture %}
+             	{% endif %}
+             
+			{% endfor %}
+             {% if from_var == true %}
+             From {{ fromshipping }}
+           	 {% endif %}
+			</div>
+       	 </div>  
+       <div align="center" style="clear: both;">
+       <klarna-placement
+        data-id="77561ec5-7c52-4bb3-9a7c-99f685ca7ebd" 
+        data-purchase_amount="{{variant.price}}"
+       ></klarna-placement>
+      </div>
+<!--Smart file default--->
+                            {% render 'smarth', product: product, smarthOuterClass: 'smart-mt-4 smart-mb-4' %}
+                            
+       <div class="clearfix"></div>
+                
+      {% endunless %}
+        
+        {% assign hide_default_title = false %}
+      {% if product.variants.size == 1 and product.variants.first.title contains 'Default' %}
+      {% assign hide_default_title = true %}
+      {% endif %}
+    
+      {% if settings.product_description_position == "top" %}
+        {% if product.description != blank %}
+         <div class="description" itemprop="description">
+           {{ product.description | split: '<!-- split -->' | first }}
+         </div>
+       {% endif %}
+      {% endif %} 
+       
+       
+
+      {% unless collection_handles contains 'coming-soon' %}
+        {% include 'product-form' with 'product' %}
+      {% endunless %}  
+       
+      {% assign columnwidth = '33%' %}{% if product.type == 'BBQ Island' %}{% assign columnwidth = '25%' %}{% endif %}
+       
+<ul class="tabs">
+  <li style="width: {{columnwidth}}; text-align: center;"><a class="active" href="#tab1">Description</a></li>
+  
+  {% if product.type == 'BBQ Island' %}
+  	<li style="width: {{columnwidth}}; text-align: center;"><a href="#tab4">Shipping</a></li>
+  {% endif %}
+  
+  <li style="width: {{columnwidth}}; text-align: center;"><a href="#tab2">Warranty</a></li>
+  <li style="width: {{columnwidth}}; text-align: center;"><a href="#tab3">Brand</a></li>  
+</ul>
+       
+<ul class="tabs-content">
+  <li class="active" id="tab1">{% if settings.product_description_position == "bottom" %}
+        {% if product.description != blank %}
+         <div class="description" itemprop="description">
+          {{ product.description | split: '<!-- split -->' | first }}
+         </div>
+       
+        {% endif %}
+      {% endif %}
+       
+</li>
+
+  
+    <li id="tab2"> <div class="rte">  {% if product.vendor == 'All Things Cedar' %}
+            {{ pages.all-things-cedar-warranty.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Cal Flame' %}
+            {{ pages.cal-flame-warranty.content }}
+            {% endif %}
+       
+      {% if product.vendor == 'Chicago Brick Oven' %}
+            {{ pages.chicago-pizza-oven-warranty.content }}
+            {% endif %}
+      {% if product.vendor == 'NewAge' %}
+            {{ pages.new-age-warranty.content }}
+            {% endif %}
+      {% if product.vendor == 'American Spas' %}
+            {{ pages.american-spas-warranty.content }}
+            {% endif %}
+       {% if product.vendor == 'MirageVision TV' %}
+            {{ pages.miragevision-warranty.content }}
+            {% endif %}
+
+      {% if product.vendor == 'Big Ridge Outdoor Kitchens' %}
+            {{ pages.big-ridge-outdoor-kitchens-warranty.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Caluco' %}
+            {{ pages.caluco-warranty.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Fire Sense' %}
+            {{ pages.Fire-Sense-Warranty.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Patio Sense' %}
+            {{ pages.Patio-Sense-Warranty.content }}
+            {% endif %}
+ {% if product.vendor == 'KidKraft' %}
+            {{ pages.KidKraft-Warranty-1.content }}
+            {% endif %}
+            {% if product.vendor == 'Source Furniture' %}
+            {{ pages.source-outdoor-warranty.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Fire Pit Art' %}
+            {{ pages.fire-pit-art-warranty.content }}
+            {% endif %}
+             
+               {% if product.vendor == 'Mayne' %}
+            {{ pages.mayne-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Douglas Nance' %}
+            {{ pages.douglas-nance-teak-warranty.content }}
+            {% endif %}
+                      
+              {% if product.vendor == 'Hospitality Rattan' %}
+            {{ pages.hospitality-rattan-warranty.content }}
+            {% endif %}
+       {% if product.vendor == 'Hospitality Rattan Patio' %}
+            {{ pages.hospitality-rattan-warranty.content }}
+            {% endif %}
+      {% if product.vendor == 'Hospitality Rattan Home' %}
+            {{ pages.hospitality-rattan-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Panama Jack Outdoor'  %}
+            {{ pages.panama-jack-warranty.content }}
+            {% endif %}
+                   
+           
+             
+             {% if product.vendor == 'Bull' %}
+            {{ pages.bull-warranty.content }}
+            {% endif %}
+             
+             {% if product.vendor == 'Blaze' %}
+            {{ pages.blaze-warranty.content }}
+            {% endif %}   
+      
+             {% if product.vendor == 'Fire Magic' %}
+            {{ pages.fire-magic-warranty.content }}
+            {% endif %}   
+      
+      {% if product.vendor == 'Dimplex' %}
+            {{ pages.dimplex-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Primo Ceramic Grills' %}
+            {{ pages.primo-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Modway' %}
+            {{ pages.modway-furniture-warranty.content }}
+            {% endif %}
+      
+       {% if product.vendor == 'Le Griddle' %}
+            {{ pages.le-griddle-warranty.content }}
+            {% endif %}
+      
+        {% if product.vendor == 'Icon Grills' %}
+            {{ pages.icon-grills-warranty.content }}
+            {% endif %}
+      
+       {% if product.vendor == 'Lion Premium Grills' %}
+            {{ pages.lion-premium-grills-warranty.content }}
+            {% endif %}
+      
+       {% if product.vendor == 'Coyote Outdoor Living' %}
+            {{ pages.coyote-outdoor-living-warranty.content }}
+            {% endif %}
+      
+       {% if product.vendor == 'RCS' %}
+            {{ pages.rcs-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Memphis Wood Fire Grills' %}
+            {{ pages.memphis-wood-fire-grill-warranty.content }}
+            {% endif %}
+    
+         
+      {% if product.vendor == 'RTA Outdoor Living' %}
+            {{ pages.rta-outdoor-living-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Music City Fire Company' %}
+            {{ pages.music-city-fire-company-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Napoleon' %}
+            {{ pages.napoleon-fireplaces-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Mont Alpi' %}
+            {{ pages.mont-alpi-warranty.content }}
+            {% endif %}
+             
+             {% if product.vendor == 'American Outdoor Grill' %}
+            {{ pages.aog-warranty.content }}
+            {% endif %}
+      
+      {% if product.vendor == 'Summerset Professional Grills' %}
+            {{ pages.summerset-professional-grills-warranty.content }}
+            {% endif %}
+  
+   {% if product.vendor == 'Empire Comfort Systems' %}
+            {{ pages.about-empire-comfort-systems-warranty.content }}
+            {% endif %}
+      
+ {% if product.vendor == 'American Muscle Grill' %}
+            {{ pages.american-muscle-grill-warranty.content }}
+            {% endif %}
+        
+  <li id="tab3"><div class="rte">{% if product.vendor == 'All Things Cedar' %}
+            {{ pages.all-things-cedar-brand.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Cal Flame' %}
+            {{ pages.cal-flame-brand.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Lion Premium Grills' %}
+            {{ pages.lion-premium-grills.content }}
+            {% endif %}
+    
+    
+       {% if product.vendor == 'Coyote Outdoor Living' %}
+            {{ pages.coyote-outdoor-living.content }}
+            {% endif %}
+    
+     {% if product.vendor == 'RCS' %}
+            {{ pages.RCS.content }}
+            {% endif %}
+    
+      {% if product.vendor == 'Memphis Wood Fire Grills' %}
+            {{ pages.about-memphis-wood-fire-grills.content }}
+            {% endif %}
+    
+      {% if product.vendor == 'RTA Outdoor Living' %}
+            {{ pages.about-rta-outdoor-living.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Primo Ceramic Grills' %}
+            {{ pages.primo-brand.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Modway' %}
+            {{ pages.modway-furniture.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'MirageVision TV' %}
+            {{ pages.miragevision.content }}
+            {% endif %}
+
+    {% if product.vendor == 'Big Ridge Outdoor Kitchens' %}
+            {{ pages.about-big-ridge-outdoor-kitchens.content }}
+            {% endif %}
+    
+     {% if product.vendor == 'The Outdoor Plus' %}
+            {{ pages.the-outdoor-plus.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Le Griddle' %}
+            {{ pages.le-griddle.content }}
+            {% endif %}
+    {% if product.vendor == 'American Spas' %}
+            {{ pages.about-american-spas.content }}
+            {% endif %}
+     {% if product.vendor == 'Icon Grills' %}
+            {{ pages.icon-grills.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Dimplex' %}
+            {{ pages.dimplex.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Music City Fire Company' %}
+            {{ pages.about-music-city-fire-company.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Caluco' %}
+            {{ pages.caluco-brand.content }}
+            {% endif %}
+    {% if product.vendor == 'KidKraft' %}
+            {{ pages.KidKraft-brand-1.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Fire Sense' %}
+            {{ pages.Fire-Sense-brand.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Patio Sense' %}
+            {{ pages.Patio-Sense-brand.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Source Furniture' %}
+            {{ pages.source-outdoor-brand.content }}
+            {% endif %}
+
+            {% if product.vendor == 'Fire Pit Art' %}
+            {{ pages.fire-pit-art-brand.content }}
+            {% endif %}
+    {% if product.vendor == 'Chicago Brick Oven' %}
+            {{ pages.about-chicago-pizza-oven.content }}
+            {% endif %}
+                {% if product.vendor == 'NewAge' %}
+            {{ pages.new-age-brand.content }}
+            {% endif %}
+    
+               {% if product.vendor == 'Mayne' %}
+            {{ pages.mayne-brand.content }}
+            {% endif %}
+               
+               {% if product.vendor == 'Hospitality Rattan' %}
+            {{ pages.hospitality-rattan-brand.content }}
+            {% endif %}
+    {% if product.vendor == 'Hospitality Rattan Home' %}
+            {{ pages.hospitality-rattan-brand.content }}
+            {% endif %}
+    {% if product.vendor == 'Hospitality Rattan Patio' %}
+            {{ pages.hospitality-rattan-brand.content }}
+            {% endif %}
+               
+               {% if product.vendor == 'Panama Jack Outdoor' %}
+            {{ pages.panama-jack-brand.content }}
+            {% endif %}
+                 
+               {% if product.vendor == 'Bull' %}
+            {{ pages.bull-brand.content }}
+            {% endif %}
+               
+                {% if product.vendor == 'Blaze' %}
+            {{ pages.blaze-brand.content }}
+            {% endif %}
+    
+                  {% if product.vendor == 'Fire Magic' %}
+            {{ pages.fire-magic-brand.content }}
+            {% endif %}
+    {% if product.vendor == 'American Muscle Grill' %}
+            {{ pages.american-muscle-grill-1.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Summerset Professional Grills' %}
+            {{ pages.summerset-professional-grills.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Napoleon' %}
+            {{ pages.about-napoleon-fireplaces.content }}
+            {% endif %}
+    
+    {% if product.vendor == 'Mont Alpi' %}
+            {{ pages.about-mont-alpi.content }}
+            {% endif %}
+    
+   {% if product.vendor == 'Douglas Nance' %}
+            {{ pages.douglas-nance-teak.content }}
+            {% endif %}
+    
+               {% if product.vendor == 'American Outdoor Grill' %}
+            {{ pages.aog-brand.content }}
+            {% endif %}
+      
+       {% if product.vendor == 'Empire Comfort Systems' %}
+            {{ pages.empire-comfort-systems-brand.content }}
+            {% endif %}
+  
+  
+  		<li id="tab4">
+<div class="rte">
+{% if product.type == 'BBQ Island' and product.vendor == 'Cal Flame' %}
+	{{ pages.cal-flame-bbq-island-delivery.content }}
+{% elsif product.type == 'BBQ Island' and product.vendor == 'Mont Alpi' %}
+	{{ pages.mont-alpi-delivery-options.content }}
+  {% elsif product.type == 'BBQ Island' and product.vendor == 'Bull' %}
+	{{ pages.bull-bbq-island-delivery.content }}
+{% else %}
+	{{ pages.bbq-island-shipping.content }}
+{% endif %}
+</div>
+</li>
+  
+</ul>
+   
+     
+      
+      {% if settings.display_collections or settings.display_tags or settings.display_type %}
+       <hr />
+      {% endif %}
+     
+       <div class="meta">
+         {% if settings.display_collections %}
+           <p>
+             <span class="label">{{ 'products.product.collections' | t }}:</span> 
+             <span>
+              {% for col in product.collections %}
+                <a href="{{ col.url }}" title="{{ col.title }}">{{ col.title }}</a>{% unless forloop.last %},{% endunless %} 
+              {% endfor %}
+            </span>
+          </p>
+         {% endif %}
+       
+         {% if settings.display_tags %}
+            <p>
+              {% for tag in product.tags %}
+                {% if forloop.first %}
+                  <span class="label">{{ 'products.product.tags' | t }}:</span> 
+                {% endif %}
+
+                {% unless tag contains 'meta-related-collection-' %}
+                  <span>
+                    <a href="/collections/{% if collection %}{{ collection.handle }}{% else %}all{% endif %}/{{ tag | handle }}" title="{{ 'products.product.products_tagged' | t: tag: tag }}">{{ tag }}</a>{% unless forloop.last %},{% endunless %}
+                  </span>
+                {% endunless %} 
+              {% endfor %}
+            </p>
+         {% endif %}
+       
+        {% if settings.display_type %}
+           <p>
+             <span class="label">{{ 'products.product.product_types' | t }}:</span> 
+             <span>{{ product.type | link_to_type }}</span>
+           </p>
+        {% endif %}
+       </div>
+       <div class="description_meta">
+         {{ product.metafields.c_f.description }}
+       </div>
+
+      {% include "social-buttons" with "product" %}     
+    </div>
+    
+    {% if settings.product_images_position == 'right' %}   
+      <div class="{% if settings.product_sidebar %}six{% else %}eight{% endif %} columns {% if product-images == blank %}{% if settings.product_images_position == 'left' %}alpha{% else %}omega{% endif %}{% endif %}">          
+        {% include 'product-images' %}
+      </div>
+    {% endif %}
+ {% comment %}     <style>
+{% comment %}label.y-label.yotpo-review-date {display:none;}{% endcomment %}
+</style>{% endcomment %}
+       {% comment %}   <div class="yotpo yotpo-main-widget"
+    data-product-id="{{ product.id }}"
+    data-name="{{ product.title | escape }}"
+    data-url="{{ shop.url }}{{ product.url }}"
+    data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}"
+    data-description="{{ product.description | escape }}">
+</div>{% endcomment %}
+  </div>
+
+  {% if product.description contains "<!-- split -->"  %}
+    <br class="clear" />
+    <div class="section clearfix">
+      <div class="description">
+        {{ product.description | split: '<!-- split -->' | last }}
+      </div>
+    </div>
+  {% endif %}
+
+{% include 'judgeme_widgets', widget_type: 'judgeme_review_widget', concierge_install: true %}
+  
+  </div>
+
+       {% render 'smarth', product: product, smarthOuterClass: 'smart-mt-4 smart-mb-4' %} 
+
+    
+  {% if settings.display_related_products %}
+    {% capture limit %}{{ settings.products_per_row | plus: 1 }}{% endcapture %}
+
+    {% if collection and collection.all_products_count > 1 %}
+      {% assign col = collection.handle %}
+    {% else %}
+      {% assign col = product.collections.last.handle %}
+    {% endif %}
+  
+            
+    {% for tag in product.tags %}
+      {% if tag contains 'meta-related-collection-' %}
+        {% assign col = tag | remove: 'meta-related-collection-' %}
+        {% assign collection = collections[col] %}
+        {% capture limit %}{{ collection.products_count | plus: 1 }}{% endcapture %}
+      {% endif %}
+    {% endfor %}
+      
+    {% if col and collections[col].all_products_count > 0 %}
+      <br class="clear" />
+      <br class="clear" />
+      <h4 class="title center">{{ 'products.product.related_items' | t }}</h4>
+
+      {% assign skip_product = product %}
+      {% assign products = collections[col].products %}
+      {% assign products_per_row = settings.products_per_row %}
+      {% include 'product-loop' with settings.product_sidebar %}
+    {% endif %}
+  {% endif %}
+</div>
+
+{% include 'webyze-swatches' %}
+<!-- spurit_occ-added -->
+{% include 'spurit_occ-product-snippet' %}
+<!-- /spurit_occ-added -->
+<script text="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+{% if product.metafields.direct_qr['active'] %}
+  <script type="text/javascript">
+    function levARActivationHelper(activation_type) { 
+      var _learnq = _learnq || [],
+          productFormId = 'product-form-{{ product.id|json }}',
+          variantSelectField = document.getElementById(productFormId).querySelector('[name="id"]');
+
+      var aritem = {
+        Name: {{ product.title|json }},
+        ProductID: {{ product.id|json }},
+        VariantID: "",
+        VariantName: "",
+        ViewerURL: "",
+        ActivationType: "",
+      };
+
+      aritem.VariantID = parseInt(variantSelectField.value);
+      aritem.VariantName = variantSelectField.options[variantSelectField.selectedIndex].text;
+      aritem.ViewerURL = "https://viewer.levar.io/index.html?variant="+variantSelectField.value;
+      aritem.ActivationType = activation_type;
+
+      _learnq.push(['track', 'levAR Activation', aritem]);
+      ga('send', 'event', { eventCategory: 'levAR Activation', eventAction: 'click', eventLabel: activation_type}); 
+    }
+
+    var levARHotspotButton = document.getElementById('levar-direct-qr-hotspot-button'),
+        levARQRButton = document.getElementById('levar-direct-qr-button')
+        levARObserverStop = false;
+    
+    levARHotspotButton.addEventListener('click', function() {
+      var levARQRButtonOnClick = levARQRButton.onclick;
+      levARQRButton.onclick = false;
+      levARQRButton.click();
+      levARQRButton.onclick = levARQRButtonOnClick;
+    });
+
+    var observer = new MutationObserver(function(mutations, observer) {
+      mutations.forEach(function(mutationRecord) {
+        if (levARObserverStop) {
+          observer.disconnect();
+        } else {
+          setTimeout(function() {
+            levARHotspotButton.classList.remove('levar-active');
+          }, 3000);
+        }
+        levARObserverStop = true;
+      });    
+    });
+
+    observer.observe(levARQRButton, { attributes : true, attributeFilter : ['style'] });
+  </script>
+{% endif %}
+ <div class="searchanise-recommendations" id="7H0H0V8P6A5W4M4"></div>     
+      
+      
+

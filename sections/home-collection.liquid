@@ -1,0 +1,104 @@
+{% if section.settings.enable_block == true %}
+<div class="sixteen columns">
+  {% assign col_per_row = section.settings.col_per_row %}
+<div class="custom-collection-list">
+  <h5>{{section.settings.col_list_title}}</h5>
+  {% for block in section.blocks %}
+  	<div class="text-center custom_col_item {% if col_per_row == "2" %}eight columns {% cycle 'alpha', 'omega' %}{% elsif col_per_row == "4" %}four columns {% cycle 'alpha', '', '', 'omega' %}{% else %}two columns {% cycle 'alpha', '', '', '', '', 'omega' %}{% endif %} {% cycle 'even', 'odd' %}">
+      {% if block.settings.col_link != blank %}<a href="{{ block.settings.col_link }}">{% endif %}
+      
+      	{% if block.settings.col_image != blank %}  
+      	<div class="custom_col_img">
+          <img src="{{ block.settings.col_image | img_url: '300x300_cropped' }}" alt="{{ block.settings.col_title }}" />
+        </div>
+        {% endif %}
+      
+        {% if block.settings.col_title != blank %}
+        <span>{{ block.settings.col_title }}</span>
+        {% endif %}
+      
+     {% if block.settings.col_link != blank %}</a>{% endif %}
+  	</div>
+  
+  {% capture new_row %}
+    <br class="clear product_clear" />
+{% endcapture %}
+  
+  {% if col_per_row == "2" %}
+          {% cycle '', new_row %}
+        {% elsif col_per_row == "3" %}
+          {% cycle '', '', new_row %}    
+        {% elsif col_per_row == "4" %}  
+          {% cycle '', '', '', new_row %}
+        {% endif %}      
+  
+  {% endfor %}
+</div>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Home Collection",
+    "settings": [  
+  {
+        "type": "checkbox",
+        "id": "enable_block",
+        "label": "Enable Block?"
+      },
+{
+        "type": "text",
+        "id": "col_list_title",
+        "label": "Title"
+      },
+{
+        "type": "select",
+        "id": "col_per_row",
+        "label": "Blocks Per Row",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          },
+          {
+            "value": "6",
+            "label": "6"
+          }
+        ]
+      }
+  ],
+    "blocks": [
+	{
+      "type": "image",
+      "name": "Add Block",
+	  "settings": [
+        {
+          "type": "image_picker",
+          "id": "col_image",
+          "label": "Image"
+        },
+		{
+          "type": "text",
+          "id": "col_title",
+    	  "label": "Title"
+        },
+		{
+          "type": "url",
+          "id": "col_link",
+    	  "label": "Link"
+        }
+	   ]
+	  }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

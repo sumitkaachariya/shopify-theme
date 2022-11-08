@@ -1,0 +1,467 @@
+<script type="text/javascript">
+	</script>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script type="text/javascript">
+
+    removesmarthighlight();
+    function removesmarthighlight() {
+        var smarth1 = document.getElementsByClassName('1smarthDesktop');
+        if(smarth1[0]){
+        } else {
+            var remove_div1 = document.getElementsByClassName('1smartHighlights');
+            if(remove_div1[0]){
+                remove_div1[0].parentNode.removeChild(remove_div1[0]);
+            }
+        }
+        var smarth2 = document.getElementsByClassName('2smarthDesktop');
+        if(smarth2[0]){
+        } else {
+            var remove_div2 = document.getElementsByClassName('2smartHighlights');
+            if(remove_div2[0]){
+                remove_div2[0].parentNode.removeChild(remove_div2[0]);
+            }
+        }
+        var smarth3 = document.getElementsByClassName('3smarthDesktop');
+        if(smarth3[0]){
+        } else {
+            var remove_div3 = document.getElementsByClassName('3smartHighlights');
+            if(remove_div3[0]){
+                remove_div3[0].parentNode.removeChild(remove_div3[0]);
+            }
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+
+        var mypage = '{{template}}';
+        var myproductid = '{{product.id}}';
+        // for (var i = 0; i < 8; i++) {
+            setTimeout(function(){ 
+                smarthsetlivevisit(mypage,myproductid);
+                
+            }, 500); 
+        // }
+
+        var smarthsku = '{{ProductSKU}}';
+        var skuclass = document.getElementsByClassName('smarthsku');
+        if(smarthsku == 0){
+            for (var i = 0; i < skuclass.length; i++) {
+                if(skuclass[i].dataset.sku == 0){
+                    var parentsku = skuclass[i].parentElement;
+                    var parent2sku = parentsku.parentElement;
+                    parent2sku.style.cssText = 'display:none !important';
+                }
+            }
+        }
+
+        document.getElementById("smart-modal-close").onclick = function() {mymodalsmarth()};
+        window.onclick = function(event) {
+            if (event.target.classList[1] == 'smart-modal-open') {
+                mymodalsmarth();
+            }
+        }
+
+        setTimeout(function(){ 
+            smartonload();
+        }, 500);
+
+    })
+
+    function smarthsetlivevisit(mypage,myproductid) {
+        setTimeout(function(){ 
+
+            var settimelive = ;
+            var setvisitlimit = ;
+
+            var d = new Date();
+            var time = setcookietimestamphsmart(settimelive);
+            var mytime = '';
+            if(settimelive < 5){
+                mytime = (time * 60 );
+            }else if(settimelive > 4 && settimelive < 8){
+                mytime =(time * 60 * 60 );
+            }else if(settimelive > 7){
+                mytime = (time * 24 * 60 * 60 );
+            }
+
+            var smartloop2 = document.getElementsByClassName('smarthloop');
+            for (var i = 0; i < smartloop2.length; i++) {
+                var smallloop2 = smartloop2[i].parentElement;
+                var parentloop2 = smallloop2.getAttribute('data-smartproductid');
+                var myuser = getCookiesmarth("smartvisits"+parentloop2);
+                if (myuser != "") {
+                    myhttpreqhsmart(parentloop2,0,mytime,setvisitlimit);
+                } else {
+                    myhttpreqhsmart(parentloop2,1,mytime,setvisitlimit);
+                    setCookiesmarth("smartvisits"+parentloop2, 'setsmartvisits', settimelive);
+                }
+
+            }
+
+            var smartloop = document.getElementsByClassName('smarthloop');
+            for (var i = 0; i < smartloop.length; i++) {
+                if(mypage == 'product'){
+                    var smallloop = smartloop[i].parentElement;
+                    var parentloop = smallloop.getAttribute('data-smartproductid');
+                    if(parentloop == myproductid){
+                        smartloop[i].classList.add("smartvisitsh"+parentloop);
+                        // var removeloop = smartloop[i].parentElement;
+                        // var removeloop2 = removeloop.parentElement;
+                    }else{
+                        var removeloop = smartloop[i].parentElement;
+                        var removeloop2 = removeloop.parentElement;
+                        removeloop2.style.visibility = 'hidden';
+                        smartloop[i].classList.remove("smarthloop");
+                        removeloop2.remove();
+                    }
+                }else{
+                  var oldloop = smartloop[i].parentElement;
+                  var newloop = oldloop.parentElement;
+                  newloop.style.visibility = 'hidden';
+                  smartloop[i].classList.remove("smarthloop");
+                  newloop.remove();
+                }
+            }
+
+        }, 500);
+    }
+
+    function myhttpreqhsmart(lastid,mynew,gettime,setvisitlimit) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var pageliveview = JSON.parse(this.responseText);
+                var smartvisits = document.getElementsByClassName("smartvisitsh"+lastid);
+                for (var i = 0; i < smartvisits.length; i++) {
+                    if(setvisitlimit < pageliveview.pageviews){
+                        smartvisits[i].innerHTML = pageliveview.pageviews;
+                        var removeloop = smartvisits[i].parentElement;
+                        var removeloop2 = removeloop.parentElement;
+                        removeloop2.style.visibility = 'visible';
+                    }else{
+                        var removeloop = smartvisits[i].parentElement;
+                        var removeloop2 = removeloop.parentElement;
+                        removeloop2.style.visibility = 'hidden';
+                        smartvisits[i].classList.remove("smarthloop");
+                        removeloop2.remove();
+                        removesmarthighlight();
+                    }
+                        
+                }
+            }
+        };
+        xhttp.open("GET","https://visitcounterstaging.thalia-apps.com/?shopifyid="+lastid+"&new="+mynew+"&time="+gettime, true);
+        xhttp.send();
+    }
+
+    
+
+    function mymodalsmarth() {
+      var target = document.getElementById("smart-modal-window");
+      var parenttarget = target.parentElement;
+      if (parenttarget.classList.contains('smart-modal-open')) {
+        parenttarget.classList.remove('smart-modal-open');
+        document.getElementById('smart-modal-content').innerHTML = '';
+      }
+    }
+
+    
+    function shlink(highlightval,links,smarthighlightid,modalsize) {
+
+        if(highlightval != ''){
+
+            var highlightlink = highlightval;
+            if(links == 0){
+                window.location.href = highlightlink;
+            }else{
+                window.open(highlightlink,'_blank');
+            }
+
+        }
+        if(links == 2){
+            var target = document.getElementById("smart-modal-outer");
+            var myclasses = '';
+            if(modalsize == 0){
+                myclasses = 'smart-modal-window smart-modal-small';
+            }else if(modalsize == 2){
+                myclasses = 'smart-modal-window smart-modal-large';
+            }else{
+                myclasses = 'smart-modal-window';
+            }
+            
+            document.getElementById('smart-modal-outer').classList.add('smart-modal-open');
+            var setclass = document.getElementById('smart-modal-window');
+            setclass.className = '';
+            setclass.className = myclasses;
+            var xhr = new XMLHttpRequest();
+            var url = '/?view=smartmeta&id==highlight-popup-'+smarthighlightid;
+            xhr.open("GET", url, true);
+            xhr.setRequestHeader("Cache-Control", "max-age=3600");
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE) {
+                    if (this.status === 200) {
+                        document.getElementById('smart-modal-content').innerHTML = this.responseText;
+                    } else {
+                        console.log(this.status, this.statusText);
+                    }
+                }
+                };
+                xhr.send();
+        }
+    
+    }
+
+    function toValidDate(datestring){
+        return datestring.replace(/(\d{2})(\/)(\d{2})/, "$3$2$1");   
+    }
+
+    function myTimer(newvalue,count) {
+
+        var smarthText2 = document.getElementsByClassName('smarthText');
+        var pos = newvalue.indexOf("CountdownTimer:");
+        var res = newvalue.slice(pos+15, pos+34);
+        newvalue = newvalue.replace("[[ CountdownTimer:", "" );
+        newvalue = newvalue.replace("]]", "" );
+
+        var x = setInterval(function() { 
+
+            let end = new Date(toValidDate(res));
+            let start = new Date();
+            var remaintime = end - start;
+            var days = Math.floor(remaintime / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((remaintime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((remaintime % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((remaintime % (1000 * 60)) / 1000);
+            var realtimeleft = days + "d "+hours + "h "+minutes + "m "+seconds + "s";
+            if(seconds < 0){
+                realtimeleft = "0d 0h 0m 0s";
+            }
+            smarthText2[count].innerHTML = newvalue.replace(res,realtimeleft);
+            smarthText2[count].classList.remove("smart-counter");
+            if (remaintime < 0) { 
+                clearInterval(x); 
+            } 
+        }, 1000); 
+
+    }
+    
+    function smartonload() {
+
+        var smart2hText = document.getElementsByClassName('smarthText');
+        if(smart2hText[0]){
+            for (var i = 0; i < smart2hText.length; i++) {
+                var value = smart2hText[i].innerHTML;
+                if( value.indexOf("[[today") != -1  ){
+                    expdeliveryhdatesmart(value,i);
+                }
+            }
+            
+        }
+
+        var smarthText = document.getElementsByClassName('smarthText');
+        if(smarthText[0]){
+            for (var i = 0; i < smarthText.length; i++) {
+                var value = smarthText[i].innerHTML;
+                if( value.indexOf("CountdownTimer:") != -1  ){
+                    myTimer(value,i);
+                }
+            }
+            
+        } 
+        
+
+        var smarth1 = document.getElementsByClassName('1smarthDesktop');
+        if(smarth1[0]){
+        } else {
+            var remove_div1 = document.getElementsByClassName('1smartHighlights');
+            if(remove_div1[0]){
+                remove_div1[0].parentNode.removeChild(remove_div1[0]);
+            }
+        }
+        var smarth2 = document.getElementsByClassName('2smarthDesktop');
+        if(smarth2[0]){
+        } else {
+            var remove_div2 = document.getElementsByClassName('2smartHighlights');
+            if(remove_div2[0]){
+                remove_div2[0].parentNode.removeChild(remove_div2[0]);
+            }
+        }
+        var smarth3 = document.getElementsByClassName('3smarthDesktop');
+        if(smarth3[0]){
+        } else {
+            var remove_div3 = document.getElementsByClassName('3smartHighlights');
+            if(remove_div3[0]){
+                remove_div3[0].parentNode.removeChild(remove_div3[0]);
+            }
+        }
+
+        setTimeout(function(){ 
+            console.log('loop');
+            const smartinstances = tippy('[data-tippy-content]');
+        }, 500);
+
+
+        // const smartinstances = tippy('[data-tippy-content]');
+
+        if(countrysmarth == 'smarthighlightcountry'){
+            countrysmarth = 'newsmarthighlightcountry';
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+            
+                if (this.readyState == 4 && this.status == 200) {
+                    var mycountryoldh = this.responseText;
+                    mycountryoldh = mycountryoldh.replace("{\n", "");
+                    mycountryoldh = mycountryoldh.replace("\n}", "");
+                    var newvarh = mycountryoldh.split(",");
+                  	var setcountryh = newvarh[0].slice(14);
+                    var mycountrysmarth = setcountryh.replace('"', "");
+
+                    var countryclassSmarth = document.getElementsByClassName('smarthCountry');
+                    for (var i = 0; i < countryclassSmarth.length; i++) {
+                        var counrtylisth = countryclassSmarth[i].getAttribute('data-countryselectedh');
+                        var position = counrtylisth.search(mycountrysmarth);
+                        if(position < 0){ 
+                            countryclassSmarth[i].style.cssText = 'display:none !important';
+                            countryclassSmarth[i].classList.add("removeme");
+                            // countryclassSmarth[i].remove();
+                        }
+                    }
+                    var removeclass = document.getElementsByClassName('removeme');
+                    for (var i = 0; i < removeclass.length; i++) {
+                        removeclass[i].remove();
+                    }
+                    var highlightclass1 = document.getElementsByClassName('1smarthDesktop');
+                    if(highlightclass1.length < 1){
+                        var maindiv1 = document.getElementsByClassName('1smartHighlights');
+                        if(maindiv1[0]){
+                            maindiv1[0].remove();
+                        }
+                    }
+                    var highlightclass2 = document.getElementsByClassName('2smarthDesktop');
+                    if(highlightclass2.length < 1){
+                        var maindiv2 = document.getElementsByClassName('2smartHighlights');
+                        if(maindiv2[0]){
+                            maindiv2[0].remove();
+                        }
+                    }
+                    var highlightclass3 = document.getElementsByClassName('3smarthDesktop');
+                    if(highlightclass3.length < 1){
+                        var maindiv3 = document.getElementsByClassName('3smartHighlights');
+                        if(maindiv3[0]){
+                            maindiv3[0].remove();
+                        }
+                    }
+                }
+            };
+            xhttp.open("GET", "https://geoloc.thapi.workers.dev/", true);
+            xhttp.send();
+        }
+
+    }
+
+    function expdeliveryhdatesmart(value,count) {
+        var weekdays = '6,0';
+        var dateformatselected = 'dddd, MMMM D';
+        var smarthTextdate = document.getElementsByClassName('smarthText');
+        var realvalue = value;
+        var pos = realvalue.indexOf("[[today");
+        var pos2 = realvalue.indexOf("]]");
+        var startres = realvalue.slice(pos+8, pos2);
+        realvalue = realvalue.replace("[[today,", "" );
+        realvalue = realvalue.replace("]]", "" );
+        var pos3 = realvalue.indexOf("[[today");
+        var pos4 = realvalue.indexOf("]]");
+        var endres = realvalue.slice(pos3+8, pos4);
+        realvalue = realvalue.replace("[[today,", "" );
+        realvalue = realvalue.replace("]]", "" );
+        var wrongdays = weekdays.split(",");
+        // var days = {sun:0,mon:1,tue:2,wed:3,thu:4,fri:5,sat:6};
+        var startDate = new Date(new Date().getTime()+(parseInt(startres)*24*60*60*1000));
+        var today = new Date(new Date().getTime());
+        var firstinc=0;
+        while (today <= startDate) {
+            var getday = String(today.getDay());
+            if(wrongdays.indexOf(getday) != -1){
+            startDate.setDate(startDate.getDate() + 1);
+            firstinc++;
+            }
+            today.setDate(today.getDate() + 1);
+        }
+        value = value.replace("[[today,"+startres+"]]", moment(startDate).format(dateformatselected));
+
+        var extradays = firstinc+parseInt(endres);
+        var endDate = new Date(new Date().getTime()+(extradays*24*60*60*1000));
+        var todayend = startDate;
+        var secinc=0;
+        while (todayend <= endDate) {
+            var getday = String(todayend.getDay());
+            if(wrongdays.indexOf(getday) != -1){
+            endDate.setDate(endDate.getDate() + 1);
+            secinc++;
+            }
+            todayend.setDate(todayend.getDate() + 1);
+        }
+        value = value.replace("[[today,"+endres+"]]", moment(endDate).format(dateformatselected));
+        smarthTextdate[count].innerHTML = value;
+    }
+
+    function setCookiesmarth(cname, cvalue, exdays) {
+      var d = new Date();
+      var time = setcookietimestamphsmart(exdays);
+      if(exdays < 5){
+        d.setTime(d.getTime() + (time * 60 * 1000));
+      }else if(exdays > 4 && exdays < 8){
+        d.setTime(d.getTime() + (time * 60 * 60 * 1000));
+      }else if(exdays > 7){
+        d.setTime(d.getTime() + (time * 24 * 60 * 60 * 1000));
+      }
+      
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookiesmarth(cname) {
+      var name = cname + "=";
+      var ca = document.cookie.split(';');
+      for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    function setcookietimestamphsmart(time) {
+        var realtime='';
+        if(time==1){
+            realtime=1;
+        }else if(time==2){
+            realtime=5;
+        }else if(time==3){
+            realtime=10;
+        }else if(time==4){
+            realtime=30;
+        }else if(time==5){
+            realtime=1;
+        }else if(time==6){
+            realtime=6;
+        }else if(time==7){
+            realtime=12;
+        }else if(time==8){
+            realtime=1;
+        }else if(time==9){
+            realtime=7;
+        }else if(time==10){
+            realtime=15;
+        }else if(time==11){
+            realtime=30;
+        }
+        return realtime;
+    }
+
+</script>

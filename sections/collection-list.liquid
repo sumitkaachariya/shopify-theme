@@ -1,0 +1,100 @@
+{% if section.settings.enable_list %}
+{% assign col_per_row = section.settings.col_per_row %}
+{% assign mobile_col_per_row = section.settings.mobile_col_per_row %}
+
+<div class="collection-list">  
+   
+  {% for block in section.blocks %}
+  	<div class="text-center col_item {% if col_per_row == "2" %}six columns {% cycle 'alpha', 'omega' %}{% elsif col_per_row == "3" %}five columns {% cycle 'alpha', '', 'omega' %}{% else %}four columns {% cycle 'alpha', '', '', 'omega' %}{% endif %} {% cycle 'even', 'odd' %}">
+      {% if block.settings.col_link != blank %}<a href="{{ block.settings.col_link }}">{% endif %}
+      
+      	{% if block.settings.col_image != blank %}  
+      	<div class="col_img">
+          <img src="{{ block.settings.col_image | img_url: 'original' }}" alt="{{ block.settings.col_title }}" />
+        </div> 
+        {% endif %}
+      
+        {% if block.settings.col_title != blank %}
+        <span>{{ block.settings.col_title }}</span>
+        {% endif %}
+      
+     {% if block.settings.col_link != blank %}</a>{% endif %}
+  	</div>
+  
+  {% capture new_row %}
+    <br class="clear product_clear" />
+{% endcapture %}
+  
+  {% if col_per_row == "2" %}
+          {% cycle '', new_row %}
+        {% elsif col_per_row == "3" %}
+          {% cycle '', '', new_row %}    
+        {% elsif col_per_row == "4" %}  
+          {% cycle '', '', '', new_row %}
+        {% endif %}      
+  
+  {% endfor %}
+  
+</div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Collections List",
+    "settings": [
+		{
+          "id": "enable_list",
+          "type": "checkbox",
+          "label": "Enable Collections List?"          
+        },
+		{
+        "type": "select",
+        "id": "col_per_row",
+        "label": "Collections Per Row",
+        "options": [
+          {
+            "value": "2",
+            "label": "2"
+          },
+          {
+            "value": "3",
+            "label": "3"
+          },
+          {
+            "value": "4",
+            "label": "4"
+          }
+        ]
+      }
+	],
+    "blocks": [
+	{
+      "type": "image",
+      "name": "Image",
+	  "settings": [
+        {
+          "type": "image_picker",
+          "id": "col_image",
+          "label": "Collection Image"
+        },
+		{
+          "type": "text",
+          "id": "col_title",
+    	  "label": "Collection Title"
+        },
+		{
+          "type": "url",
+          "id": "col_link",
+    	  "label": "Collection Link"
+        }
+	   ]
+	  }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

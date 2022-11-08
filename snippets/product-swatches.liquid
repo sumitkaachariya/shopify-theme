@@ -1,0 +1,23 @@
+<div class="product-swatches-{{product.id}}"></div>
+<div style="clear:both;"></div>
+<script>
+  jQuery(document).ready(function(){
+    var appDomain = '//productswatches.herokuapp.com';
+    var url = appDomain + '/product_swatches/get-json/{{product.id}}';
+    var data = {
+      	product_id:'{{product.id}}', 
+      	{% if product.metafields.swatch.tag %}tag:'{{product.metafields.swatch.tag}}'{% endif %}
+    };
+    $.ajax({
+      	type: 'post',
+        url: url,
+      	data: data,
+        cache: false,
+        dataType: "html",
+        success: function(data) {
+          	console.log(data);
+            $(".product-swatches-{{product.id}}").html(data);
+        }
+    });
+  }); // end on document ready
+</script>

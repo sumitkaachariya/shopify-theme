@@ -1,0 +1,73 @@
+{% assign featured_image = product.selected_or_first_available_variant.featured_image | default: product.featured_image %}
+
+<div class="flexslider product_gallery {% if product-images == blank %}product_slider{% endif %}" id="product-{{ product.id }}-gallery">
+  <div id="levar_photo_box">
+    <ul class="slides">
+      {% for image in product.images %}
+        <li data-thumb="{{ image | product_img_url: 'grande' }}" data-title="{% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}{{ product.title }}{% else %}{{ image.alt | escape }}{% endif %}">
+          {% if image.alt contains 'youtube' or image.alt contains 'vimeo' %}
+            {% assign src = image.alt | split: 'src="' %}
+            {% assign src = src[1] | split: '"' | first %}
+  
+            {% if src contains '?' %}
+              {% assign src = src | append: '&amp;autoplay=1' %}
+            {% else %}
+              {% assign src = src | append: '?autoplay=1' %}
+            {% endif %}
+  
+            <div class="video-container {% if image.alt contains 'vimeo' %}vimeo{% else %}youtube{% endif %}">
+              <div>
+                <a href="{{ src }}" class="fancybox fancybox.iframe" data-fancybox-group="{{ product.id }}" title="{{ product.title | escape }}">
+                  {{ image.alt }}
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <a href="{{ image | product_img_url: 'master' }}" class="fancybox" rel="group" data-fancybox-group="{{ product.id }}" title="{{ image.alt | escape }}">
+              <img src="{{ 'loader.gif' | asset_url }}" data-src="{{ image | product_img_url: 'grande' }}" data-src-retina="{{ image | product_img_url: '1024x1024' }}" alt="{{ image.alt | escape }}" data-index="{{ forloop.index0 }}" data-image-id="{{ image.id }}" data-cloudzoom="zoomImage: '{{ image | product_img_url: 'master' }}', tintColor: '{{ settings.shop_bg_color }}', zoomPosition: 'inside', zoomOffsetX: 0, touchStartDelay: 250" class="cloudzoom {% if featured_image.id == image.id %}featured_image{% endif %}" />
+            </a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div id="levar-buttons-wrapper" class="{% unless product.metafields.direct_qr['active'] and product.metafields.levar_player['active'] %} levar-single-button-wrapper {% endunless %}">
+    {% if product.metafields.levar_player['active'] %}
+      <button id="levar-player" class="levar-player-activation button btn levar-button" onClick="levARActivationHelper('Signal - Player');"><svg class="{{ classes }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58.57 33.96"><defs><style>.cls-1{fill:none;stroke-miterlimit:10;stroke-width:1.2px;}.cls-1,.cls-2{stroke:#fff;stroke-linecap:round;}.cls-2{fill:#2d2d2d;stroke-linejoin:round;}</style></defs><g id="Layer_2" data-name="Layer 2"><g id="Icon"><polyline class="cls-1" points="21.41 5.18 24.2 6.57 24.2 12.43"/><line class="cls-1" x1="29.55" y1="5.96" x2="24.2" y2="6.57"/><polyline class="cls-1" points="37.56 24.34 42.84 23.38 42.84 17.74"/><polyline class="cls-1" points="16.25 15.86 16.25 20.78 18.34 22.35"/><polyline class="cls-1" points="28.8 1.16 33.52 0.61 36.33 1.76"/><polyline class="cls-1" points="16.25 8.15 16.25 2.6 21.89 1.95"/><line class="cls-1" x1="18.34" y1="3.64" x2="16.25" y2="2.6"/><polyline class="cls-1" points="39.64 3.12 42.84 4.43 42.84 10.07"/><line class="cls-1" x1="36.7" y1="5.14" x2="42.84" y2="4.43"/><polyline class="cls-1" points="20.81 24.2 24.2 26.74 30.55 25.6"/><line class="cls-1" x1="24.2" y1="26.74" x2="24.2" y2="20.37"/><path class="cls-1" d="M9.83,16C7.34,16.4.58,18.4.6,22.5c0,5.35,13.36,9,16.84,9.73,6.92,1.52,17,1.71,27.18-.7,4.13-1,13.35-4.39,13.35-9,0-3.48-4.48-5.44-7.17-6"/><polygon class="cls-2" points="51.51 14.18 51.51 19.21 47.51 16 51.51 14.18"/></g></g></svg> <span>3D</span></button>
+    {% endif %}
+    {% if product.metafields.direct_qr['active'] %}
+      <button id="levar-direct-qr-button" class="button btn levar-button" onClick="levARActivationHelper('Signal - QR');"><svg width="40" height="40" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_6:96)"><path d="M20.6346 9.84585C21.1218 10.4831 21.1218 11.3434 20.6346 11.9797C19.1 13.9829 15.4183 18.1077 11.1198 18.1077C6.82131 18.1077 3.13955 13.9829 1.60497 11.9797C1.36793 11.6745 1.23926 11.2991 1.23926 10.9128C1.23926 10.5264 1.36793 10.151 1.60497 9.84585C3.13955 7.84257 6.82131 3.7178 11.1198 3.7178C15.4183 3.7178 19.1 7.84257 20.6346 9.84585V9.84585Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.1198 13.9963C12.8228 13.9963 14.2033 12.6157 14.2033 10.9127C14.2033 9.20975 12.8228 7.82919 11.1198 7.82919C9.41678 7.82919 8.03622 9.20975 8.03622 10.9127C8.03622 12.6157 9.41678 13.9963 11.1198 13.9963Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></g><defs><clipPath id="clip0_6:96"><rect width="22" height="22" fill="white" transform="translate(22 22) rotate(-180)"/></clipPath></defs></svg> <span>My Space</span></button>
+    {% endif %}
+  </div>
+  {% if product.metafields.c_f.Product_Video != blank %}
+  <div class="video-here"> <button type="button" class="btn btn-primary btn-lg video-button" data-toggle="modal" data-target="#myModal">
+    <span class="video-span"><img src="{{ 'final.png' | asset_url }}"></span><span class="text-span">Watch Product Video</span>
+</button></div>
+  {% endif %}
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+ 
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+     
+      <div class="modal-body" id="yt-player">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <iframe src="{{ product.metafields.c_f.Product_Video }}" allowfullscreen="" width="100%" frameborder="0" height="315"></iframe>
+      </div>
+     
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+ var videoSrc = $("#myModal iframe").attr("src");
+
+$('#myModal').on('show.bs.modal', function () { // on opening the modal
+  // set the video to autostart
+  $("#myModal iframe").attr("src", videoSrc+"?autoplay=1");
+});
+
+$("#myModal").on('hidden.bs.modal', function (e) { // on closing the modal
+  // stop the video
+  $("#myModal iframe").attr("src", null);
+});
+</script>

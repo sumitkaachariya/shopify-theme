@@ -1,0 +1,400 @@
+.hide{display:none !important;}
+.custom-content {
+    margin-top: 30px;
+}
+#shopify-section-custom-collection {
+    margin-top: 10px;
+}
+.custom_col_item.columns{
+  margin-bottom: 15px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.custom_col_item.two.columns {
+    width: 16.66667%;
+    margin: 0 0 15px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+.custom_col_item img {
+    max-width: 100%;
+    border-radius: 50%;
+    margin-bottom: 0px;
+    display: block;
+    transition: all 0.4s ease;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.custom-collection-list {
+    display: inline-block;
+    text-align: center;    
+    width: 100%;
+}
+.custom-collection-list h5 {
+    margin-bottom: 25px;
+}
+.custom_col_item:hover img {transform: scale(1.1);}
+.custom_col_img {
+    display: block;
+    overflow: hidden;
+    border: 2px solid #eee;
+    border-radius: 50%;
+    margin-bottom: 10px;position: relative;
+    padding-bottom: 100%;
+}
+.collection_banner {
+    position: relative;
+}
+.collection_caption {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    right: 23px;
+    bottom: 23px;min-width:250px;
+    background: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 20px;
+}
+.collection_caption h2 {
+    font-weight: 400;
+    font-family: "Lato";
+    text-transform: none;
+    margin: 0 0 17px;
+    line-height: normal;
+}
+#colnav ul {
+    margin: 0 0 15px;
+    list-style: none;
+    padding: 0;        
+}
+.collection_banner img,.flexslider .slides .collection_banner img {
+    display: block;
+    height: 400px;
+    width: 100%;
+    position: relative;
+    object-fit: cover;
+}
+.menu.main-menu li:nth-child(5) .dropdown {
+    width: 400px;
+}
+.text-center {
+    text-align: center;
+}
+.col_item {
+    border: 1px solid #C3C3C3;
+    box-sizing: border-box;
+    margin-bottom: 22px;
+    font-size: 20px;
+    padding-bottom: 10px;
+}
+.col_item a {
+    color: #555;font-size: 16px;
+}
+.col_item a:hover{color: #516f96;}
+.col_item a span {
+    padding: 0 10px;
+    display: block;
+}
+.col_img { 
+    display: table-cell;
+    width: 1%;
+    height: 225px;
+    vertical-align: middle;
+}
+.col_img img { 
+    display: block;
+    margin: 0 auto;
+}
+.relative.product_image img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+    max-height: 100%;
+    right: 0;
+    bottom: 0;
+}
+.relative.product_image {
+    position: relative;
+    padding-bottom: 100%;
+}
+.custom-brand-list{
+	display: inline-block;text-align: center;width: 100%;
+}
+@media only screen and (min-width: 768px) and (max-width: 1150px){
+	.half-column.right-column .inform-block,.half-column.left-column .inform-block {
+    	padding: 0 10px;
+	}
+
+}
+
+@media only screen and (max-width: 959px) and (min-width: 768px){
+  .col_img{height: 160px;} .col_item{font-size: 18px;}
+  .custom_col_item.two.columns{width: 32.333%;
+    padding-bottom: 25px;
+    float: none;
+    display: inline-block;
+    vertical-align: top;}
+}
+@media (min-width: 767px){
+.container #homepage_slider {
+    padding: 0 10px;
+}
+.inform .column {
+    margin: 0;padding: 0;box-sizing: border-box;
+}  
+}
+@media (max-width: 767px){
+  .custom_col_item.two.columns{float: none;
+    display: inline-block;
+    vertical-align: top;width:49%;padding-bottom:25px;}
+  .collection_top {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  div#colnav {
+    margin-top: 30px;
+  }
+}
+@media (max-width: 480px){
+  .collection_caption{right: 15px;
+    bottom: 15px;padding: 15px;
+    left: 15px;}
+}
+
+/* Icons Features */
+.icons-features {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  background-color: #eee;
+  padding: 10px 10px 10px 25px;
+}
+.icon-feature {
+  font-weight: bold;
+  margin: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /*text-align: center;*/
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 50%;
+      -ms-flex: 50%;
+          flex: 50%;
+  line-height: 1.5;          
+}
+.icon-feature img {
+  width: 36px;
+  height: auto;
+  margin-right: 15px;
+}
+.icon-feature span {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 14px;
+}
+/*============================================================================
+  levAR 3D Model Toggle
+==============================================================================*/
+#levar_photo_box {
+  position: relative;
+}
+
+#levar-buttons-wrapper {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: none;
+}
+
+.levar-button {
+  border: none;
+  border-radius: 45px;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease-in-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.levar-button svg {
+  width: 32px;
+  max-height: 20px;
+  margin-right: 12px;
+  margin-left: -10px;
+}
+
+/* 
+ * .cls-1, .cls-2
+ * Use these class names to control the color of the svg default or hover. Apply stroke to both .cls-1 and .cls-2 and apply fill to .cls-2 only.
+ */
+ 
+.levar-button .cls-1,
+.levar-button .cls-2 {
+  transition: 0.25s ease-in-out;
+}
+
+#levar-player {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  background: #516f96;
+}
+
+#levar-player svg {
+  margin-left: 0;
+}
+
+#levar-player:hover {
+  background: lighten(#516f96, 10%);
+}
+
+#levar-direct-qr-button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+#levar-direct-qr-button svg {
+  margin-right: 6px;
+}
+
+#levar-direct-qr-button:hover {
+  background: lighten(#ff6600, 10%);
+}
+
+#levar-buttons-wrapper .levar-button {
+  margin-top: 12px;
+}
+
+#levar-buttons-wrapper.levar-single-button-wrapper .levar-button {
+  border-radius: 45px !important;
+}
+
+#levar-direct-qr-hotspot-button {
+  border: none;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 0.25s ease-in-out;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0;
+  z-index: 9;
+  width: 260px;
+  max-width: 54px;
+  overflow: hidden;
+  border-radius: 45px;
+  min-width: 0;
+  min-height: 0;
+  background-color: #ff6600;
+  border-color: #ff6600;
+  box-shadow: 0px 0px 6px #747474;
+}
+  
+/* .levar-button:after {
+  box-shadow: none !important;
+} */
+
+#levar-direct-qr-hotspot-button svg {
+  width: 34px;
+  max-height: 36px;
+  margin: 0;
+}
+  
+#levar-direct-qr-hotspot-button .levar-button-icon {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  width: 48px;
+  padding: 6px 3px 3px 0;
+  background-color: #ff6600;
+}
+  
+#levar-direct-qr-hotspot-button span {
+  position: absolute;
+  z-index: 1;
+  left: 32px;
+  width: 130px;
+  opacity: 0;
+  font-size: 16px;
+  transition: all 1s ease 0s;
+  white-space: nowrap;
+}
+  
+#levar-direct-qr-hotspot-button:hover,
+#levar-direct-qr-hotspot-button:focus,
+#levar-direct-qr-hotspot-button.levar-active {
+  max-width: 244px;
+}
+  
+#levar-direct-qr-hotspot-button:hover span,
+#levar-direct-qr-hotspot-button:focus span,
+#levar-direct-qr-hotspot-button span {
+  opacity: 1;
+}
+
+@media screen and (max-width: 749px) {
+  #levar-direct-qr-hotspot-button .levar-button-icon {
+    padding: 6px 0px 3px 0;
+    width: 40px;
+  }
+  
+  #levar-direct-qr-hotspot-button svg {
+    width: 24px;
+    max-height: 24px;
+  }
+  
+  #levar-direct-qr-hotspot-button {
+    max-width: 40px;
+    right: 0.5rem;
+  }
+  
+  #levar-direct-qr-hotspot-button span {
+    font-size: 14px;
+    left: 24px;
+  }
+  
+  #levar-direct-qr-hotspot-button:hover,
+  #levar-direct-qr-hotspot-button:focus,
+  #levar-direct-qr-hotspot-button.levar-active {
+    max-width: 200px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  #levar-direct-qr-hotspot-button {
+    right: 2.5rem;
+  }
+}
+
+body.levar-loaded #levar-buttons-wrapper {
+  display: flex;
+}
+  
+body.levar-loaded #shopify-section-header {
+  z-index: 9999;
+}
+
+body.levar-loaded #levar-direct-qr-hotspot-button {
+  opacity: 1;
+  pointer-events: all;
+}
+
+body.levar-loaded .product_images_column {
+  position: relative;
+}
+
+body.levar_player_on #levar-direct-qr-hotspot-button {
+  z-index: -1;
+}

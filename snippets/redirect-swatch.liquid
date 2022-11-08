@@ -1,0 +1,167 @@
+{{ 'lightbox.min.js' | asset_url | script_tag }}
+
+{{ 'lightbox.css' | asset_url | stylesheet_tag }}
+
+<style>
+body .swatch .redirect-swatch-element {
+  float: none;
+  -webkit-transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+
+</style>
+<script>
+  console.log(123456);
+  var assets = [];
+  var assets_indexes = [];
+  {% assign assets_array = product.metafields.c_f.assets | split: ' ' %}
+  {% assign i = 0 %}
+  {% for asset_str in assets_array %}
+  	assets['{{asset_str}}'] = '{{ asset_str | append: '.png' | asset_url }}';
+    assets_indexes['{{asset_str}}'] = {{ i }};
+    {% assign i = i | plus: 1 %}
+  {% endfor %}
+           
+   var details = [];        
+  {% assign details_array = product.metafields.c_f.details | split: '" "' %}
+  {% for details_str in details_array %}
+  	details.push('{{details_str}}'.replace('"', ''));
+                 console.log('heqrgfs');
+  {% endfor %}
+           asdfzxcv = details;
+           
+    function load_owl() {
+      jQuery(function($) {
+        console.log('111');
+        $('.swatch.clearfix').each(function() {
+          $(this).owlCarousel({
+            //margin:0,
+            //loop:true,
+            //autoWidth:true,
+            //responsive:false, 
+            items: 7,
+            dots: true,
+           navigation : true
+          });
+        });
+      });//*/
+           
+
+      jQuery(function() {
+           $('.swatch label').each(function() {
+             var details_index = assets_indexes[$(this).parent().attr('data-value')];
+             var details_str = details[details_index];
+             details_str = details_str.replace(/;/g, '<br>');
+             var img_url = ($(this).css('background-image').replace('url(','').replace(')',''));
+           	 $(this).webuiPopover({title:details_str,content:'<a href="' + img_url + '" data-lightbox="image-1"><img src="' + img_url + '"></a>',trigger:'hover',placement:'bottom'});
+           });
+      });
+
+    }
+  
+  
+  jQuery(function($) {
+    console.log("====================");
+    console.log("====================");
+    console.log("====================");
+    console.log("====================");
+    console.log("====================");
+	
+    metafields = '{{product.metafields.c_f.product_handles}}';
+    if (metafields.length < 1) {
+		load_owl();
+      return;
+    }
+    metafields = metafields.split(' ');
+
+           
+    
+
+    
+    console.log(metafields);
+    var products = [];
+	var option_indexes = [];
+  	var options_sku = [];
+
+    
+    console.log('http://betterpatio.com/products/'+metafields[0]+'.js');
+    
+      $.ajax({
+        dataType: "json",
+        url: 'http://betterpatio.com/products/'+metafields[0]+'.js',
+        success: function (data) {
+          products.push(data);
+          for (var i = 1; i < metafields.length; i++) {
+			//alert(metafields[i]);
+            $.ajax({
+              dataType: "json",
+              url: 'http://betterpatio.com/products/'+metafields[i]+'.js',
+              success: function (data) {
+                products.push(data);
+                option_indexes = [];
+                for (var k = 0; k < data.options.length; k++) {
+                   $.each($('.swatch[data-option='+data.options[k].name.replace(/\s/g, '_')+']'), function(key, swatch) {
+                     option_indexes.push(k);
+                     for (var j = 0; j < data.variants.length; j++) {
+                       console.log('.redirect-swatch-element.'+data.variants[j].options[k]);
+                       if ($('.redirect-swatch-element.'+data.variants[j].options[k]).length == 0) {
+                         
+                        $('.swatch[data-option='+data.options[k].name.replace(/\s/g, '_')+']').append('\
+                          <div data-value="'+data.variants[j].options[k]+'" class="swatch-element redirect-swatch-element '+data.variants[j].options[k]+'" style="display:block !important">\
+                            <input id="swatch-'+k+'-'+data.variants[j].options[k]+'" type="radio" name="option-'+k+'" value="'+data.variants[j].options[k]+'" />\
+                            <label for="swatch-'+k+'-'+data.variants[j].options[k]+'" style="background-image: url('+assets[data.variants[j].options[k]]+'); background-size: cover;">\
+                            </label>\
+                          </div>\
+                        ');
+                         $('#swatch-'+k+'-'+data.variants[j].options[k]).change( function() {
+                           
+                           var options_selected = [];
+                           for (var l = 0; l < option_indexes.length; l++) {
+                            console.log($('input[name=option-'+option_indexes[l]+']:checked').val()); 
+                             options_selected.push($('input[name=option-'+option_indexes[l]+']:checked').val());
+                           }
+                           
+                           
+                           for (var a1 = 0; a1 < products.length; a1++) {
+                             for (var a2 = 0; a2 < products[a1].variants.length; a2++) {
+                               var found = true;
+                               for (var l = 0; l < option_indexes.length; l++) {
+                                 console.log('comparing '+products[a1].variants[a2].options[option_indexes[l]]+'   '+options_selected[option_indexes[l]]);
+                                 if (products[a1].variants[a2].options[option_indexes[l]] != options_selected[option_indexes[l]])
+                                 	found = false;
+                               }
+                               if (found)
+                                 //alert('redirect to '+products[a1].handle + '  ' + products[a1].variants[a2].id);
+                                 document.location = '/products/'+products[a1].handle+'?variant='+products[a1].variants[a2].id;
+                             }
+                           }
+                           
+                          	console.log('redirect initiated 1234567'); 
+                         });
+                       }
+                     }
+                   });
+                //});
+              	}
+                
+                if (products.length == metafields.length) {
+                	load_owl(); 
+                }
+           	  }
+            });
+            
+          }
+        }
+      });
+    
+    
+
+    
+    
+  }); //*/
+  
+
+</script>
